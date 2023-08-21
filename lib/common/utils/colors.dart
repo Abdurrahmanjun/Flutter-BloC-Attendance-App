@@ -25,3 +25,9 @@ const Color lightText = Color(0xFF4A6572);
 const Color deactivatedText = Color(0xFF767676);
 const Color dismissibleBackground = Color(0xFF364A54);
 const Color spacer = Color(0xFFF2F2F2);
+
+const Color navylight = Color(0xff007CB9);
+const Color navyDark = Color(0xff005689);
+
+const Color toastGreen = Color(0xff00ADB5);
+const Color toastRed = Color(0xffF76262);

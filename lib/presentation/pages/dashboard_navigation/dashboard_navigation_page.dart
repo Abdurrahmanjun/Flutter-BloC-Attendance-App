@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:otaqu/presentation/pages/auth_login/login_page.dart';
 import 'package:otaqu/presentation/pages/dashboard_absence/dashboard_absence_page.dart';
 import 'package:otaqu/presentation/pages/dashboard_home/dashboard_home_page.dart';
 import 'package:otaqu/presentation/pages/dashboard_home/dashboard_home_page_two.dart';
@@ -49,22 +50,22 @@ class _HomeNavBarPageState extends State<HomeNavBarPage> {
             BottomNavyBarItem(
                 title: Text('Home'),
                 icon: Icon(Icons.home),
-                activeColor: Color(0xFF5FBD84),
+                activeColor: Colors.lightBlue,
                 inactiveColor: Colors.black38),
             BottomNavyBarItem(
                 title: Text('Absence'),
                 icon: Icon(Icons.pending_actions),
-                activeColor: Color(0xFF5FBD84),
+                activeColor: Colors.lightBlue,
                 inactiveColor: Colors.black38),
             BottomNavyBarItem(
                 title: Text('Notification'),
                 icon: Icon(Icons.notifications),
-                activeColor: Color(0xFF5FBD84),
+                activeColor: Colors.lightBlue,
                 inactiveColor: Colors.black38),
             BottomNavyBarItem(
                 title: Text('Settings'),
                 icon: Icon(Icons.settings),
-                activeColor: Color(0xFF5FBD84),
+                activeColor: Colors.lightBlue,
                 inactiveColor: Colors.black38),
           ],
         ),
