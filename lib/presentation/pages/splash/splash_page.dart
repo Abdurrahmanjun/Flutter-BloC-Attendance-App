@@ -4,7 +4,7 @@ import 'package:otaqu/common/utils/constants.dart';
 import 'package:otaqu/presentation/bloc/destination/destination_bloc.dart';
 import 'package:otaqu/presentation/bloc/onboarding/onboarding_bloc.dart';
 import 'package:otaqu/presentation/bloc/token/token_bloc.dart';
-import 'package:otaqu/presentation/pages/auth_login/login_page.dart';
+import 'package:otaqu/presentation/pages/auth/login_page.dart';
 import 'package:otaqu/presentation/pages/dashboard_navigation/dashboard_navigation_page.dart';
 import 'package:otaqu/presentation/pages/dashboard_home/dashboard_home_page.dart';
 import 'package:otaqu/presentation/pages/onboarding/onboarding_page.dart';

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:otaqu/common/utils/colors.dart';
+import 'package:otaqu/presentation/pages/auth/components/forgot_password_dialog.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -140,11 +142,18 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 40),
-                        const Text(
-                          "FORGOT PASSWORD?",
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.normal),
+                        TextButton(
+                          onPressed: () {
+                            showInDialog(context,
+                                dialogAnimation:
+                                    DialogAnimation.SLIDE_TOP_BOTTOM,
+                                builder: (_) => ForgotPasswordDialog());
+                          },
+                          child: Text(
+                            'FORGOT PASSWORD?',
+                            style: primaryTextStyle(
+                                color: Colors.grey, weight: FontWeight.normal),
+                          ),
                         ),
                         const SizedBox(height: 50),
                       ],

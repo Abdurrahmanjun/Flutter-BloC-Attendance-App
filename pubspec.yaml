@@ -36,10 +36,19 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   json_serializable: ^6.5.4
   jwt_decoder: ^2.0.1
+  html: ^0.15.4
 
   # Persistance Data
   shared_preferences: ^2.0.15
   sqflite: ^2.2.2
+
+  # Used for image save and pick
+  image_picker: ^1.0.2
+  path_provider: ^2.0.15
+  cached_network_image: ^3.2.3
+  permission_handler: ^10.3.0
+  screenshot: ^2.1.0
+  file_picker: ^5.2.6
 
 dev_dependencies:
   flutter_lints: ^2.0.0

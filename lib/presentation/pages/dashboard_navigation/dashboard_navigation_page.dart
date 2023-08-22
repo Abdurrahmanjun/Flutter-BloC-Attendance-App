@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:otaqu/presentation/pages/auth_login/login_page.dart';
+import 'package:otaqu/presentation/pages/auth/login_page.dart';
 import 'package:otaqu/presentation/pages/dashboard_absence/dashboard_absence_page.dart';
 import 'package:otaqu/presentation/pages/dashboard_home/dashboard_home_page.dart';
 import 'package:otaqu/presentation/pages/dashboard_home/dashboard_home_page_two.dart';

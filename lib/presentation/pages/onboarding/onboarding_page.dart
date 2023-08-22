@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:otaqu/common/utils/constants.dart';
 import 'package:otaqu/presentation/bloc/onboarding/onboarding_bloc.dart';
-import 'package:otaqu/presentation/pages/auth_login/login_page.dart';
+import 'package:otaqu/presentation/pages/auth/login_page.dart';
 import 'package:otaqu/presentation/pages/dashboard_home/dashboard_home_page.dart';
 import 'package:otaqu/presentation/pages/dashboard_navigation/dashboard_navigation_page.dart';
 import 'package:otaqu/presentation/pages/onboarding/components/onboarding_content_component.dart';
