@@ -39,7 +39,7 @@ class ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Forget Password", style: boldTextStyle(size: 20)),
-          4.height,
+          8.height,
           Text(
               "A reset password link will be sent to the above enteren email address",
               style: secondaryTextStyle()),
@@ -52,7 +52,8 @@ class ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
               context,
               label: "Email",
               textStyle: secondaryTextStyle(color: bodyColor),
-            ).copyWith(prefixIcon: Icon(Icons.search).paddingAll(12)),
+            ).copyWith(
+                prefixIcon: const Icon(Icons.email_outlined).paddingAll(12)),
             errorInvalidEmail: "Enter valid email",
             errorThisFieldRequired: errorThisFieldRequired,
           ),
