@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:otaqu/common/utils/constants.dart';
 import 'package:otaqu/presentation/bloc/destination/destination_bloc.dart';
 import 'package:otaqu/presentation/bloc/onboarding/onboarding_bloc.dart';
@@ -47,7 +48,7 @@ class SplashPage extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => LoginPage(),
+                      builder: (_) => HomeNavBarPage(),
                     ),
                   );
                 });
@@ -67,7 +68,6 @@ class SplashPage extends StatelessWidget {
           )
         ],
         child: Container(
-          margin: const EdgeInsets.all(50),
           alignment: Alignment.center,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -76,8 +76,8 @@ class SplashPage extends StatelessWidget {
                 'assets/images/logo.png',
                 width: 200,
               ),
-              const SizedBox(height: 20),
-              const Text("Powered by : Otaqu.id")
+              20.height,
+              const Text("Powered by : HRM App")
             ],
           ),
         ),

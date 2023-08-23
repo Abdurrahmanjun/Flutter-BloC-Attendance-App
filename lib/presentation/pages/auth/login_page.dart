@@ -62,7 +62,7 @@ class LoginPage extends StatelessWidget {
                           var snackbar = const SnackBar(
                             content:
                                 Text('Selamat, data berhasil ditambahkan.'),
-                            backgroundColor: toastGreen,
+                            backgroundColor: infoGreen,
                             margin: EdgeInsets.all(8),
                             behavior: SnackBarBehavior.floating,
                           );

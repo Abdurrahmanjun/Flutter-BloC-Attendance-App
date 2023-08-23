@@ -3,6 +3,7 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:otaqu/presentation/pages/auth/login_page.dart';
 import 'package:otaqu/presentation/pages/dashboard_absence/dashboard_absence_page.dart';
 import 'package:otaqu/presentation/pages/dashboard_home/dashboard_home_page.dart';
+import 'package:otaqu/presentation/pages/dashboard_home/dashboard_home_page_three.dart';
 import 'package:otaqu/presentation/pages/dashboard_home/dashboard_home_page_two.dart';
 import 'package:otaqu/presentation/pages/dashboard_notification/dashboard_notification_page.dart';
 import 'package:otaqu/presentation/pages/dashboard_settings/dashboard_settings_page.dart';
@@ -21,7 +22,7 @@ class _HomeNavBarPageState extends State<HomeNavBarPage> {
       case 0:
         return new DashboardHomePageTwo();
       case 1:
-        return new DashboardAbsencePage();
+        return new DashboardHomePageThree();
       case 2:
         return new DashboardNotificationPage();
       case 3:
