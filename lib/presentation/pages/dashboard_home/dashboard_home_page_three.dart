@@ -1,5 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart' as nbutils;
+
 import 'package:otaqu/common/utils/colors.dart';
 import 'package:otaqu/common/utils/constants.dart';
 import 'package:otaqu/presentation/pages/dashboard_home/components/hrm_diagram_card.dart';
@@ -31,7 +33,7 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
                   style: nbutils.boldTextStyle(size: 18, color: white),
                 ),
                 Text(
-                  "Have a nice day!",
+                  "Selamat Pagi, Selamat Beraktivitas !",
                   style:
                       nbutils.secondaryTextStyle(color: nearlyWhite, size: 12),
                 )
@@ -192,113 +194,13 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
                   ),
                 ).paddingAll(16),
                 // Others Menu
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Container(
-                          decoration: const BoxDecoration(
-                              color: Color.fromRGBO(243, 245, 248, 1),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(18))),
-                          padding: const EdgeInsets.all(16),
-                          child: Icon(
-                            Icons.date_range,
-                            color: Colors.blue[900],
-                            size: 30,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        Text(
-                          "Overtime",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14,
-                              color: Colors.blue[100]),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Container(
-                          decoration: const BoxDecoration(
-                              color: Color.fromRGBO(243, 245, 248, 1),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(18))),
-                          padding: const EdgeInsets.all(16),
-                          child: Icon(
-                            Icons.date_range,
-                            color: Colors.blue[900],
-                            size: 30,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        Text(
-                          "Sick Leave",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14,
-                              color: Colors.blue[100]),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Container(
-                          decoration: const BoxDecoration(
-                              color: Color.fromRGBO(243, 245, 248, 1),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(18))),
-                          padding: const EdgeInsets.all(16),
-                          child: Icon(
-                            Icons.date_range,
-                            color: Colors.blue[900],
-                            size: 30,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        Text(
-                          "Reimburs",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14,
-                              color: Colors.blue[100]),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Container(
-                          decoration: const BoxDecoration(
-                              color: Color.fromRGBO(243, 245, 248, 1),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(18))),
-                          padding: const EdgeInsets.all(16),
-                          child: Icon(
-                            Icons.date_range,
-                            color: Colors.blue[900],
-                            size: 30,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        Text(
-                          "Terlambat",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14,
-                              color: Colors.blue[100]),
-                        ),
-                      ],
-                    )
+                    _MenuItem(icon: Icons.date_range, title: "Overtime"),
+                    _MenuItem(icon: Icons.date_range, title: "Sick Leave"),
+                    _MenuItem(icon: Icons.date_range, title: "Reimburs"),
+                    _MenuItem(icon: Icons.date_range, title: "Terlambat"),
                   ],
                 ).paddingOnly(left: 16, right: 16, top: 8, bottom: 20),
                 Container(
@@ -312,20 +214,15 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      // subscriptions
-                      Text(
-                        "Jumlah Sales",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            color: Colors.black45),
-                      ).paddingBottom(16),
+                      // Sales Sections
+                      const _HrmTextSection(title: "Jumlah Sales")
+                          .paddingBottom(16),
                       Container(
-                        padding: EdgeInsets.only(top: 16, bottom: 16),
+                        padding: const EdgeInsets.only(top: 16, bottom: 16),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.white,
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               color: Colors.black38,
                               blurRadius: 1,
@@ -338,189 +235,174 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      height: 48,
-                                      width: 2,
-                                      decoration: BoxDecoration(
-                                        color: infoGreen.withOpacity(0.5),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(4.0)),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 4, bottom: 2),
-                                            child: Text(
-                                              'Sales Aktif',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: <Widget>[
-                                              const SizedBox(
-                                                width: 28,
-                                                height: 28,
-                                                child:
-                                                    Icon(Icons.group_outlined),
-                                              ),
-                                              const Padding(
-                                                padding: EdgeInsets.only(
-                                                    left: 4, bottom: 3),
-                                                child: Text(
-                                                  '17',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16,
-                                                    color: darkerText,
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 4, bottom: 3),
-                                                child: Text(
-                                                  'Orang',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 14,
-                                                    letterSpacing: -0.2,
-                                                    color:
-                                                        grey.withOpacity(0.5),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
+                                const _ItemSalesGroup(
+                                  title: "Sales Aktif",
+                                  counter: 20,
+                                  color: infoGreen,
                                 ),
-                                const SizedBox(height: 8),
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      height: 48,
-                                      width: 2,
-                                      decoration: BoxDecoration(
-                                        color: infoRed.withOpacity(0.5),
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(4.0),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 4, bottom: 2),
-                                            child: Text(
-                                              'Sales Non Aktif',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: <Widget>[
-                                              const SizedBox(
-                                                width: 28,
-                                                height: 28,
-                                                child:
-                                                    Icon(Icons.group_outlined),
-                                              ),
-                                              const Padding(
-                                                padding: EdgeInsets.only(
-                                                    left: 4, bottom: 3),
-                                                child: Text(
-                                                  '8',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16,
-                                                    color: darkerText,
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 8, bottom: 3),
-                                                child: Text(
-                                                  'Orang',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 14,
-                                                    letterSpacing: -0.2,
-                                                    color:
-                                                        grey.withOpacity(0.5),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                )
+                                8.height,
+                                const _ItemSalesGroup(
+                                  title: "Sales Non Aktif",
+                                  counter: 5,
+                                  color: infoRed,
+                                ),
                               ],
                             ).paddingOnly(
-                                left: 16, right: 16, top: 4, bottom: 16),
-                            const Divider(
-                              color: Colors.black38,
-                            ),
+                                left: 24, right: 24, top: 4, bottom: 16),
+                            const Divider(color: Colors.black38),
                             const Text(
                               "+ Tambah Sales Baru",
                               style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                              ),
                             ).paddingTop(8)
                           ],
                         ),
                       ),
                       32.height,
-                      // subscriptions
-                      Text(
-                        "Laporan Kehadiran",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            color: Colors.black45),
-                      ).paddingBottom(16),
+                      // laporan kehadiran
+                      const _HrmTextSection(title: "Laporan Kehadiran")
+                          .paddingBottom(16),
+                      // laporan kehadiran user
+                      Container(
+                        padding: const EdgeInsets.only(
+                            top: 20, bottom: 25, right: 20, left: 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(7),
+                          color: Colors.white,
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black38,
+                              blurRadius: 1,
+                              spreadRadius: 0.5,
+                            )
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: const Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Absensi Kamu",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.black87,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black38,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ).paddingRight(24),
+                                ),
+                                Container(
+                                  width: 90,
+                                  height: 90,
+                                  decoration: BoxDecoration(
+                                    color: Colors.blueGrey,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(100.0)),
+                                    border: Border.all(
+                                        width: 2, color: Colors.grey.shade300),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      16.height,
+                      // laporan kehadiran karyawan
+                      Container(
+                        padding: const EdgeInsets.only(
+                            top: 20, bottom: 25, right: 20, left: 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(7),
+                          color: Colors.white,
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black38,
+                              blurRadius: 1,
+                              spreadRadius: 0.5,
+                            )
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: const Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Absensi Karyawan",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.black87,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black38,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ).paddingRight(24),
+                                ),
+                                Container(
+                                  width: 90,
+                                  height: 90,
+                                  decoration: BoxDecoration(
+                                    color: Colors.orange,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(100.0)),
+                                    border: Border.all(
+                                        width: 2, color: Colors.grey.shade300),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      16.height,
                     ],
                   ).paddingOnly(left: 24, right: 24, top: 32, bottom: 16),
                 )
@@ -531,48 +413,148 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
   }
 }
 
-class card4 extends StatelessWidget {
-  Color? colorTop, colorBottom;
-  String? image, title;
-  card4({this.colorTop, this.colorBottom, this.title, this.image});
+class _MenuItem extends StatelessWidget {
+  final IconData? icon;
+  final String? title;
+  const _MenuItem({
+    Key? key,
+    this.icon,
+    this.title,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 4.0),
-      child: InkWell(
-        onTap: () {},
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              height: 80.0,
-              width: 80.0,
-              decoration: BoxDecoration(
-                boxShadow: [BoxShadow(blurRadius: 8.0, color: Colors.black12)],
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                gradient: LinearGradient(
-                    colors: [colorTop!, colorBottom!],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight),
-              ),
-            ),
-            8.height,
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 8),
-              child: Text(
-                title!,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    color: Colors.black,
-                    fontFamily: "Sofia",
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w600),
-              ),
-            )
-          ],
+    return Column(
+      children: <Widget>[
+        Container(
+          decoration: const BoxDecoration(
+              color: Color.fromRGBO(243, 245, 248, 1),
+              borderRadius: BorderRadius.all(Radius.circular(18))),
+          padding: const EdgeInsets.all(16),
+          child: Icon(
+            icon,
+            color: Colors.blue[900],
+            size: 30,
+          ),
         ),
+        const SizedBox(
+          height: 8,
+        ),
+        Text(
+          '$title',
+          style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 14,
+              color: Colors.blue[100]),
+        ),
+      ],
+    );
+  }
+}
+
+class _ItemSalesGroup extends StatelessWidget {
+  final String? title;
+  final int? counter;
+  final Color color;
+
+  const _ItemSalesGroup({
+    Key? key,
+    this.title,
+    this.counter = 0,
+    this.color = infoGreen,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Container(
+          height: 48,
+          width: 3,
+          decoration: BoxDecoration(
+            color: color.withOpacity(0.5),
+            borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 8,
+                  bottom: 8,
+                ),
+                child: Text(
+                  '$title',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  const SizedBox(
+                    width: 28,
+                    height: 28,
+                    child: Icon(Icons.group_outlined),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 4, bottom: 3),
+                    child: Text(
+                      "$counter",
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: darkerText,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4, bottom: 3),
+                    child: Text(
+                      'Orang',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                        letterSpacing: -0.2,
+                        color: grey.withOpacity(0.5),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class _HrmTextSection extends StatelessWidget {
+  final String? title;
+  const _HrmTextSection({
+    Key? key,
+    this.title,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "$title",
+      style: const TextStyle(
+        fontWeight: FontWeight.w600,
+        fontSize: 16,
+        color: Colors.black45,
       ),
     );
   }

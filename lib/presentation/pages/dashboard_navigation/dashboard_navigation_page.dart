@@ -54,12 +54,12 @@ class _HomeNavBarPageState extends State<HomeNavBarPage> {
                 activeColor: Colors.lightBlue,
                 inactiveColor: Colors.black38),
             BottomNavyBarItem(
-                title: Text('Absence'),
+                title: Text('Reports'),
                 icon: Icon(Icons.pending_actions),
                 activeColor: Colors.lightBlue,
                 inactiveColor: Colors.black38),
             BottomNavyBarItem(
-                title: Text('Notification'),
+                title: Text('Notifications'),
                 icon: Icon(Icons.notifications),
                 activeColor: Colors.lightBlue,
                 inactiveColor: Colors.black38),

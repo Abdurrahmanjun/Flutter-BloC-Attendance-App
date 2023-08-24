@@ -20,13 +20,13 @@ class _ActivitiesState extends State<Activities> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.fromLTRB(16, 16, 8, 8),
-            child: Text(
+            margin: EdgeInsets.fromLTRB(16, 0, 8, 8),
+            child: const Text(
               "Recent",
               style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: deactivatedText),
             ),
           ),
           Flexible(
@@ -34,8 +34,8 @@ class _ActivitiesState extends State<Activities> {
               itemCount: 5,
               itemBuilder: (context, index) {
                 return Container(
-                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Color(0xFFEEEEEE),
@@ -50,7 +50,7 @@ class _ActivitiesState extends State<Activities> {
                       ).paddingTop(2),
                       Expanded(
                         child: Container(
-                          margin: EdgeInsets.only(left: 10),
+                          margin: EdgeInsets.only(left: 16),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -60,7 +60,7 @@ class _ActivitiesState extends State<Activities> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      "Easy Peasy - Catur Tunggal",
+                                      "Request - Overtime Approval",
                                       style: TextStyle(
                                         color: lightText,
                                         fontWeight: FontWeight.bold,
@@ -76,23 +76,24 @@ class _ActivitiesState extends State<Activities> {
                                   ],
                                 ),
                               ),
-                              Text("2 Items"),
-                              SizedBox(
-                                height: 20,
-                              ),
+                              4.height,
                               Text(
-                                "Reorder",
+                                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
+                              16.height,
+                              Text(
+                                "Approve",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.blue,
-                                    fontSize: 15),
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
+                                  fontSize: 16,
+                                ),
                               ),
                             ],
                           ),
                         ),
                       )
                     ],
-                  ),
+                  ).paddingAll(8),
                 );
               },
             ),

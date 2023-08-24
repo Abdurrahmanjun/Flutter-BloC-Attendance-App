@@ -68,19 +68,20 @@ class _DashboardNotificationPageState extends State<DashboardNotificationPage>
               // title, history button
               Container(
                 padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "My Notifications",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                      ),
                     ),
                   ],
                 ),
               ),
-
-              Expanded(
+              const Expanded(
                 child: Activities(),
               )
             ],
