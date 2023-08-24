@@ -20,9 +20,9 @@ class _HomeNavBarPageState extends State<HomeNavBarPage> {
   Widget callPage(int current) {
     switch (current) {
       case 0:
-        return new DashboardHomePageTwo();
-      case 1:
         return new DashboardHomePageThree();
+      case 1:
+        return new DashboardHomePageTwo();
       case 2:
         return new DashboardNotificationPage();
       case 3:

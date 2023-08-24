@@ -16,23 +16,29 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: nbutils.appBarWidget(
-        "Halo Abdurrahman Jun",
-        titleWidget: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Halo Abdurrahman Jun",
-              style: nbutils.boldTextStyle(size: 18, color: white),
+      appBar: AppBar(
+        toolbarHeight: 80,
+        backgroundColor: navylight,
+        flexibleSpace: SafeArea(
+          child: Container(
+            margin: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Hello Abdurrahmanjun",
+                  style: nbutils.boldTextStyle(size: 18, color: white),
+                ),
+                Text(
+                  "Have a nice day!",
+                  style:
+                      nbutils.secondaryTextStyle(color: nearlyWhite, size: 12),
+                )
+              ],
             ),
-            Text(
-              "Selamat pagi, selamat beraktifitas !",
-              style: nbutils.secondaryTextStyle(color: white, size: 12),
-            )
-          ],
-        ).paddingTop(12),
-        showBack: false,
-        elevation: 0,
+          ),
+        ),
         actions: [
           Container(
             height: 50.0,
@@ -42,10 +48,9 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
                     image: NetworkImage(
                         "https://images.pexels.com/photos/5110839/pexels-photo-5110839.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"),
                     fit: BoxFit.cover),
-                borderRadius: BorderRadius.all(Radius.circular(25.0))),
-          ).paddingOnly(left: 16, right: 16, top: 8),
+                borderRadius: BorderRadius.all(Radius.circular(100.0))),
+          ).paddingAll(16),
         ],
-        color: navylight,
       ),
       body: Container(
           width: double.infinity,
@@ -59,142 +64,243 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
               child: SizedBox(
             child: Column(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 16, right: 16, top: 24, bottom: 16),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: navyDark,
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(16.0),
-                          bottomLeft: Radius.circular(16.0),
-                          bottomRight: Radius.circular(16.0),
-                          topRight: Radius.circular(16.0)),
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                            color: grey.withOpacity(0.2),
-                            offset: const Offset(1.1, 1.1),
-                            blurRadius: 10.0),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 8, right: 8, top: 4),
-                                  child: Column(
+                Container(
+                  margin: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                  decoration: BoxDecoration(
+                    color: navyDark,
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(16.0),
+                        bottomLeft: Radius.circular(16.0),
+                        bottomRight: Radius.circular(16.0),
+                        topRight: Radius.circular(16.0)),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                          color: grey.withOpacity(0.2),
+                          offset: const Offset(1.1, 1.1),
+                          blurRadius: 10.0),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: Column(
+                                children: <Widget>[
+                                  const Row(
                                     children: <Widget>[
-                                      const Row(
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: <Widget>[
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Text(
-                                                '09:00',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 18,
-                                                  color: white,
-                                                ),
-                                              ),
-                                              Text(
-                                                'Waktu terakhir check-in',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 12,
-                                                  color: white,
-                                                ),
-                                              )
-                                            ],
+                                          Text(
+                                            '09:00',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18,
+                                              color: white,
+                                            ),
                                           ),
+                                          Text(
+                                            'Waktu terakhir check-in',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12,
+                                              color: white,
+                                            ),
+                                          )
                                         ],
-                                      ).paddingBottom(16),
-                                      Row(
-                                        children: <Widget>[
-                                          GestureDetector(
-                                            onTap: () {
-                                              var snackbar = const SnackBar(
-                                                content: Text(
-                                                    'Selamat, data berhasil ditambahkan.'),
-                                                backgroundColor: infoGreen,
-                                                margin: EdgeInsets.all(8),
-                                                behavior:
-                                                    SnackBarBehavior.floating,
-                                              );
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(snackbar);
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  color: koswaraOrange),
-                                              child: const Text(
-                                                "CHECK OUT",
-                                                style: TextStyle(
-                                                  color: darkText,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ).paddingAll(16),
-                                            ).paddingBottom(8),
-                                          ),
-                                        ],
-                                      )
+                                      ),
                                     ],
-                                  ),
-                                ),
+                                  ).paddingBottom(16),
+                                  Row(
+                                    children: <Widget>[
+                                      GestureDetector(
+                                        onTap: () {
+                                          var snackbar = const SnackBar(
+                                            content: Text(
+                                                'Selamat, data berhasil ditambahkan.'),
+                                            backgroundColor: infoGreen,
+                                            margin: EdgeInsets.all(8),
+                                            behavior: SnackBarBehavior.floating,
+                                          );
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(snackbar);
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: koswaraOrange),
+                                          child: const Text(
+                                            "CHECK OUT",
+                                            style: TextStyle(
+                                              color: darkText,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ).paddingAll(16),
+                                        ).paddingBottom(8),
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
-                              Center(
-                                child: Stack(
-                                  clipBehavior: Clip.none,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        width: 90,
-                                        height: 90,
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey,
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(100.0)),
-                                          border: Border.all(
-                                              width: 2,
-                                              color: Colors.grey.shade300),
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Icon(Icons.add_a_photo_outlined,
-                                                color: Colors.grey.shade300)
-                                          ],
-                                        ),
+                            ),
+                            Center(
+                              child: Stack(
+                                clipBehavior: Clip.none,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      width: 90,
+                                      height: 90,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(100.0)),
+                                        border: Border.all(
+                                            width: 2,
+                                            color: Colors.grey.shade300),
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          Icon(Icons.add_a_photo_outlined,
+                                              color: Colors.grey.shade300)
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ).paddingAll(16),
+                // Others Menu
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Container(
+                          decoration: const BoxDecoration(
+                              color: Color.fromRGBO(243, 245, 248, 1),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(18))),
+                          padding: const EdgeInsets.all(16),
+                          child: Icon(
+                            Icons.date_range,
+                            color: Colors.blue[900],
+                            size: 30,
                           ),
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          "Overtime",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14,
+                              color: Colors.blue[100]),
                         ),
                       ],
                     ),
-                  ),
-                ),
-                16.height,
+                    Column(
+                      children: <Widget>[
+                        Container(
+                          decoration: const BoxDecoration(
+                              color: Color.fromRGBO(243, 245, 248, 1),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(18))),
+                          padding: const EdgeInsets.all(16),
+                          child: Icon(
+                            Icons.date_range,
+                            color: Colors.blue[900],
+                            size: 30,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          "Sick Leave",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14,
+                              color: Colors.blue[100]),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Container(
+                          decoration: const BoxDecoration(
+                              color: Color.fromRGBO(243, 245, 248, 1),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(18))),
+                          padding: const EdgeInsets.all(16),
+                          child: Icon(
+                            Icons.date_range,
+                            color: Colors.blue[900],
+                            size: 30,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          "Reimburs",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14,
+                              color: Colors.blue[100]),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Container(
+                          decoration: const BoxDecoration(
+                              color: Color.fromRGBO(243, 245, 248, 1),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(18))),
+                          padding: const EdgeInsets.all(16),
+                          child: Icon(
+                            Icons.date_range,
+                            color: Colors.blue[900],
+                            size: 30,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          "Terlambat",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14,
+                              color: Colors.blue[100]),
+                        ),
+                      ],
+                    )
+                  ],
+                ).paddingOnly(left: 16, right: 16, top: 8, bottom: 20),
                 Container(
                   decoration: const BoxDecoration(
                     color: white,
@@ -204,90 +310,31 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
                     ),
                   ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      // Container(
-                      //   height: 140.0,
-                      //   child: ListView(
-                      //     scrollDirection: Axis.horizontal,
-                      //     children: <Widget>[
-                      //       card4(
-                      //         colorTop: Color(0xFFF07DA4),
-                      //         colorBottom: Color(0xFFF5AE87),
-                      //         title: "Overtime",
-                      //       ),
-                      //       card4(
-                      //           colorTop: Color(0xFF63CCD1),
-                      //           colorBottom: Color(0xFF75E3AC),
-                      //           title: "Cuti Sakit"),
-                      //       card4(
-                      //           colorTop: Color(0xFF9183FC),
-                      //           colorBottom: Color(0xFFDB8EF6),
-                      //           title: "Reimburs"),
-                      //       card4(
-                      //           colorTop: Color(0xFF56B4EE),
-                      //           colorBottom: Color(0xFF59CCE1),
-                      //           title: "Terlambat"),
-                      //       InkWell(
-                      //         onTap: () {},
-                      //         child: card4(
-                      //             colorTop: Color(0xFF74EBD5),
-                      //             colorBottom: Color(0xFFACB6E5),
-                      //             title: "Karyawan"),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
+                      // subscriptions
+                      Text(
+                        "Jumlah Sales",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: Colors.black45),
+                      ).paddingBottom(16),
                       Container(
+                        padding: EdgeInsets.only(top: 16, bottom: 16),
                         decoration: BoxDecoration(
-                          color: white,
-                          boxShadow: <BoxShadow>[
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
+                          boxShadow: [
                             BoxShadow(
-                                color: grey.withOpacity(0.5), blurRadius: 1.0),
+                              color: Colors.black38,
+                              blurRadius: 1,
+                              spreadRadius: 0.5,
+                            )
                           ],
                         ),
                         child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'Jumlah Sales',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    var snackbar = const SnackBar(
-                                      content: Text(
-                                          'Selamat, data berhasil ditambahkan.'),
-                                      backgroundColor: infoGreen,
-                                      margin: EdgeInsets.all(8),
-                                      behavior: SnackBarBehavior.floating,
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackbar);
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: koswaraOrange),
-                                    child: const Text(
-                                      "+ Tambah Sales Baru",
-                                      style: TextStyle(
-                                        color: darkText,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                      ),
-                                    ).paddingAll(8),
-                                  ),
-                                )
-                              ],
-                            ).paddingAll(16),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
@@ -319,8 +366,6 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 14,
-                                                letterSpacing: -0.1,
-                                                color: grey.withOpacity(0.5),
                                               ),
                                             ),
                                           ),
@@ -380,7 +425,8 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
                                       decoration: BoxDecoration(
                                         color: infoRed.withOpacity(0.5),
                                         borderRadius: BorderRadius.all(
-                                            Radius.circular(4.0)),
+                                          Radius.circular(4.0),
+                                        ),
                                       ),
                                     ),
                                     Padding(
@@ -400,8 +446,6 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 14,
-                                                letterSpacing: -0.1,
-                                                color: grey.withOpacity(0.5),
                                               ),
                                             ),
                                           ),
@@ -455,42 +499,30 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
                               ],
                             ).paddingOnly(
                                 left: 16, right: 16, top: 4, bottom: 16),
-                          ],
-                        ),
-                      ).paddingBottom(16),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: white,
-                          boxShadow: <BoxShadow>[
-                            BoxShadow(
-                                color: grey.withOpacity(0.5), blurRadius: 1.0),
-                          ],
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                            const Divider(
+                              color: Colors.black38,
+                            ),
                             const Text(
-                              'Laporan Kehadiran',
-                              textAlign: TextAlign.center,
+                              "+ Tambah Sales Baru",
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
-                            ).paddingOnly(
-                                left: 16, right: 16, top: 16, bottom: 4),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                50.height,
-                              ],
-                            ).paddingOnly(
-                                left: 16, right: 16, top: 4, bottom: 16),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue),
+                            ).paddingTop(8)
                           ],
                         ),
                       ),
+                      32.height,
+                      // subscriptions
+                      Text(
+                        "Laporan Kehadiran",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: Colors.black45),
+                      ).paddingBottom(16),
                     ],
-                  ).paddingOnly(left: 24, right: 24, top: 32, bottom: 32),
+                  ).paddingOnly(left: 24, right: 24, top: 32, bottom: 16),
                 )
               ],
             ),
