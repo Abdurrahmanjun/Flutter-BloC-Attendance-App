@@ -2,8 +2,6 @@
 
 A modern, lightweight, and open-source attendance tracking application built with Flutter.
 
-Created by **@abdurrahmanjun**
-
 ---
 
 ## 🚀 Features
