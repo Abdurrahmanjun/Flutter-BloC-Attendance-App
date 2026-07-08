@@ -1,4 +1,4 @@
-package com.example.otaqu
+package com.abdurrahmanjun.attendance
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -41,7 +41,8 @@ class _HomeNavBarPageState extends State<HomeNavBarPage> {
         data: Theme.of(context).copyWith(
             canvasColor: Colors.white,
             textTheme: TextTheme(
-                headline1: TextStyle(color: Colors.black38.withOpacity(0.5)))),
+                displayLarge:
+                    TextStyle(color: Colors.black38.withOpacity(0.5)))),
         child: BottomNavyBar(
           selectedIndex: currentIndex,
           onItemSelected: (index) {

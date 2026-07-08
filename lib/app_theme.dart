@@ -34,7 +34,7 @@ class AppTheme {
     unselectedWidgetColor: Colors.black,
     dividerColor: borderColor,
     cardColor: Colors.white,
-    dialogTheme: DialogTheme(shape: dialogShape()),
+    dialogTheme: DialogThemeData(shape: dialogShape()),
     appBarTheme: AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle(
           statusBarIconBrightness: Brightness.dark,
@@ -85,7 +85,7 @@ class AppTheme {
     unselectedWidgetColor: Colors.white60,
     dividerColor: Colors.white12,
     cardColor: scaffoldSecondaryDark,
-    dialogTheme: DialogTheme(shape: dialogShape()),
+    dialogTheme: DialogThemeData(shape: dialogShape()),
     checkboxTheme: CheckboxThemeData(
       fillColor: MaterialStateProperty.all(Colors.white),
       checkColor: MaterialStateProperty.all(Colors.black),

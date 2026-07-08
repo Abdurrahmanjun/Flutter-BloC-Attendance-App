@@ -1,16 +1,3 @@
-buildscript {
-    ext.kotlin_version = '1.7.10'
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-
 allprojects {
     repositories {
         google()
@@ -18,12 +5,55 @@ allprojects {
     }
 }
 
-rootProject.buildDir = '../build'
+rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 subprojects {
-    project.evaluationDependsOn(':app')
+    project.evaluationDependsOn(":app")
+}
+
+// AGP 8 requires a namespace in every module. A few older transitive plugins
+// (e.g. nb_utils) only declare `package` in their AndroidManifest. Inject a
+// namespace from that package so they build without patching the plugin.
+subprojects {
+    // Skip projects already evaluated (e.g. :app, pulled in by evaluationDependsOn
+    // above and which already declares a namespace) — afterEvaluate would throw.
+    if (!project.state.executed) {
+        afterEvaluate { project ->
+            if (project.hasProperty("android")) {
+                def androidExt = project.extensions.findByName("android")
+                if (androidExt != null && androidExt.namespace == null) {
+                    def manifestFile = project.file("src/main/AndroidManifest.xml")
+                    if (manifestFile.exists()) {
+                        def matcher = (manifestFile.text =~ /package\s*=\s*"([^"]+)"/)
+                        if (matcher.find()) {
+                            androidExt.namespace = matcher.group(1)
+                        }
+                    }
+                }
+            }
+
+            // Older plugins pin Java and Kotlin to differing JVM targets (nb_utils:
+            // Java 1.8 / Kotlin 17; fluttertoast: Kotlin 11), which AGP rejects as
+            // inconsistent. Force BOTH to 17 for every subproject so they align.
+            if (project.hasProperty("android")) {
+                def androidExt = project.extensions.findByName("android")
+                androidExt.compileOptions {
+                    sourceCompatibility JavaVersion.VERSION_17
+                    targetCompatibility JavaVersion.VERSION_17
+                }
+                // kotlin-android adds kotlinOptions to the android DSL; ignore
+                // modules that have no Kotlin.
+                try {
+                    androidExt.kotlinOptions {
+                        jvmTarget = "17"
+                    }
+                } catch (Exception ignored) {
+                }
+            }
+        }
+    }
 }
 
 tasks.register("clean", Delete) {

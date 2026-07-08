@@ -1,4 +1,5 @@
 {
-    "commentTranslate.targetLanguage": "id",
-    "commentTranslate.hover.enabled": false
+  "commentTranslate.targetLanguage": "id",
+  "commentTranslate.hover.enabled": false,
+  "dart.flutterSdkPath": ".fvm/flutter_sdk"
 }
