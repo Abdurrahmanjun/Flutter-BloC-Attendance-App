@@ -47,3 +47,8 @@ class ConflictFailure extends Failure {
 class ValidationFailure extends Failure {
   const ValidationFailure(super.message);
 }
+
+/// Client-side: no GPS fix, so a punch cannot even be attempted.
+class LocationFailure extends Failure {
+  const LocationFailure(super.message);
+}

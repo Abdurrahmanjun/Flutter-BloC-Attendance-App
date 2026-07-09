@@ -1,529 +1,299 @@
-import 'package:flutter/material.dart';
 import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:attendance/common/utils/colors.dart';
 import 'package:attendance/common/utils/constants.dart';
+import 'package:attendance/common/utils/format_functions.dart';
+import 'package:attendance/data/models/attendance/monthly_summary.dart';
+import 'package:attendance/presentation/bloc/attendance/summary_bloc.dart';
 
+/// `GET /api/attendance/summary?month=YYYY-MM`, rendered. Previously this card
+/// showed a hardcoded calorie tracker.
+///
+/// `late` is a subset of `present`, so the legend splits `present` into on-time
+/// and late rather than listing them as siblings, and the ring shows `present`
+/// out of `workingDays`. Adding present + late + absent + leave would
+/// overcount, which is exactly the mistake the contract warns about.
 class HrmDiagramCard extends StatelessWidget {
-  final AnimationController? animationController;
-  final Animation<double>? animation;
-
-  const HrmDiagramCard({Key? key, this.animationController, this.animation})
-      : super(key: key);
+  const HrmDiagramCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: animationController!,
-      builder: (BuildContext context, Widget? child) {
-        return FadeTransition(
-          opacity: animation!,
-          child: Transform(
-            transform: Matrix4.translationValues(
-                0.0, 30 * (1.0 - animation!.value), 0.0),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 24, right: 24, top: 16, bottom: 18),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: white,
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(8.0),
-                      bottomLeft: Radius.circular(8.0),
-                      bottomRight: Radius.circular(8.0),
-                      topRight: Radius.circular(68.0)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        color: grey.withOpacity(0.2),
-                        offset: const Offset(1.1, 1.1),
-                        blurRadius: 10.0),
-                  ],
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(top: 16, left: 16, right: 16),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 8, right: 8, top: 4),
-                              child: Column(
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Container(
-                                        height: 48,
-                                        width: 2,
-                                        decoration: BoxDecoration(
-                                          color: HexColor('#87A0E5')
-                                              .withOpacity(0.5),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(4.0)),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 4, bottom: 2),
-                                              child: Text(
-                                                'Eaten',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 16,
-                                                  letterSpacing: -0.1,
-                                                  color: grey.withOpacity(0.5),
-                                                ),
-                                              ),
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: <Widget>[
-                                                SizedBox(
-                                                  width: 28,
-                                                  height: 28,
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 4, bottom: 3),
-                                                  child: Text(
-                                                    '${(1127 * animation!.value).toInt()}',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 16,
-                                                      color: darkerText,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 4, bottom: 3),
-                                                  child: Text(
-                                                    'Kcal',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 12,
-                                                      letterSpacing: -0.2,
-                                                      color:
-                                                          grey.withOpacity(0.5),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      Container(
-                                        height: 48,
-                                        width: 2,
-                                        decoration: BoxDecoration(
-                                          color: HexColor('#F56E98')
-                                              .withOpacity(0.5),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(4.0)),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 4, bottom: 2),
-                                              child: Text(
-                                                'Burned',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 16,
-                                                  letterSpacing: -0.1,
-                                                  color: grey.withOpacity(0.5),
-                                                ),
-                                              ),
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: <Widget>[
-                                                SizedBox(
-                                                  width: 28,
-                                                  height: 28,
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 4, bottom: 3),
-                                                  child: Text(
-                                                    '${(102 * animation!.value).toInt()}',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 16,
-                                                      color: darkerText,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8, bottom: 3),
-                                                  child: Text(
-                                                    'Kcal',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 12,
-                                                      letterSpacing: -0.2,
-                                                      color:
-                                                          grey.withOpacity(0.5),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 16),
-                            child: Center(
-                              child: Stack(
-                                clipBehavior: Clip.none,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      width: 100,
-                                      height: 100,
-                                      decoration: BoxDecoration(
-                                        color: white,
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(100.0),
-                                        ),
-                                        border: new Border.all(
-                                            width: 4,
-                                            color: nearlyDarkBlue
-                                                .withOpacity(0.2)),
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text(
-                                            '${(1503 * animation!.value).toInt()}',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 24,
-                                              letterSpacing: 0.0,
-                                              color: nearlyDarkBlue,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Kcal left',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12,
-                                              letterSpacing: 0.0,
-                                              color: grey.withOpacity(0.5),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: CustomPaint(
-                                      painter: CurvePainter(
-                                          colors: [
-                                            nearlyDarkBlue,
-                                            HexColor("#8A98E8"),
-                                            HexColor("#8A98E8")
-                                          ],
-                                          angle: 140 +
-                                              (360 - 140) *
-                                                  (1.0 - animation!.value)),
-                                      child: SizedBox(
-                                        width: 108,
-                                        height: 108,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 24, right: 24, top: 8, bottom: 8),
-                      child: Container(
-                        height: 2,
-                        decoration: BoxDecoration(
-                          color: background,
-                          borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 24, right: 24, top: 8, bottom: 16),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'Carbs',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                    letterSpacing: -0.2,
-                                    color: darkText,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 4),
-                                  child: Container(
-                                    height: 4,
-                                    width: 70,
-                                    decoration: BoxDecoration(
-                                      color:
-                                          HexColor('#87A0E5').withOpacity(0.2),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(4.0)),
-                                    ),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Container(
-                                          width:
-                                              ((70 / 1.2) * animation!.value),
-                                          height: 4,
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(colors: [
-                                              HexColor('#87A0E5'),
-                                              HexColor('#87A0E5')
-                                                  .withOpacity(0.5),
-                                            ]),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(4.0)),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 6),
-                                  child: Text(
-                                    '12g left',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12,
-                                      color: grey.withOpacity(0.5),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      'Protein',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                        letterSpacing: -0.2,
-                                        color: darkText,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 4),
-                                      child: Container(
-                                        height: 4,
-                                        width: 70,
-                                        decoration: BoxDecoration(
-                                          color: HexColor('#F56E98')
-                                              .withOpacity(0.2),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(4.0)),
-                                        ),
-                                        child: Row(
-                                          children: <Widget>[
-                                            Container(
-                                              width: ((70 / 2) *
-                                                  animationController!.value),
-                                              height: 4,
-                                              decoration: BoxDecoration(
-                                                gradient:
-                                                    LinearGradient(colors: [
-                                                  HexColor('#F56E98')
-                                                      .withOpacity(0.1),
-                                                  HexColor('#F56E98'),
-                                                ]),
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(4.0)),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 6),
-                                      child: Text(
-                                        '30g left',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12,
-                                          color: grey.withOpacity(0.5),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      'Fat',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                        letterSpacing: -0.2,
-                                        color: darkText,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 0, top: 4),
-                                      child: Container(
-                                        height: 4,
-                                        width: 70,
-                                        decoration: BoxDecoration(
-                                          color: HexColor('#F1B440')
-                                              .withOpacity(0.2),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(4.0)),
-                                        ),
-                                        child: Row(
-                                          children: <Widget>[
-                                            Container(
-                                              width: ((70 / 2.5) *
-                                                  animationController!.value),
-                                              height: 4,
-                                              decoration: BoxDecoration(
-                                                gradient:
-                                                    LinearGradient(colors: [
-                                                  HexColor('#F1B440')
-                                                      .withOpacity(0.1),
-                                                  HexColor('#F1B440'),
-                                                ]),
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(4.0)),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 6),
-                                      child: Text(
-                                        '10g left',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12,
-                                          color: grey.withOpacity(0.5),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+    return BlocBuilder<SummaryBloc, SummaryState>(
+      builder: (context, state) => _Card(
+        child: switch (state) {
+          SummaryLoaded(:final summary) => _Content(summary: summary),
+          SummaryFailure(:final message) => _Failure(
+              message: message,
+              onRetry: () => context
+                  .read<SummaryBloc>()
+                  .add(LoadSummaryEvent(SummaryBloc.currentMonth())),
+            ),
+          _ => const SizedBox(
+              height: 140,
+              child: Center(child: CircularProgressIndicator(strokeWidth: 2)),
+            ),
+        },
+      ),
+    );
+  }
+}
+
+class _Content extends StatelessWidget {
+  final MonthlySummary summary;
+
+  const _Content({required this.summary});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Ringkasan ${summary.month}',
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                color: darkerText,
               ),
             ),
+            Text(
+              '${summary.workingDays} hari kerja',
+              style: TextStyle(fontSize: 12, color: grey.withOpacity(0.7)),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        Row(
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  _Legend(
+                    label: 'Tepat waktu',
+                    value: summary.onTime,
+                    color: HexColor('#87A0E5'),
+                  ),
+                  _Legend(
+                    label: 'Terlambat',
+                    value: summary.late,
+                    color: koswaraOrange,
+                  ),
+                  _Legend(
+                    label: 'Absen',
+                    value: summary.absent,
+                    color: infoRed,
+                  ),
+                  _Legend(
+                    label: 'Cuti',
+                    value: summary.leave,
+                    color: infoGreen,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            _PresenceRing(summary: summary),
+          ],
+        ),
+        const Divider(height: 28),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _Footer(
+              label: 'Rata-rata check-in',
+              value: summary.averageCheckInTime ?? '—',
+            ),
+            _Footer(
+              label: 'Lembur',
+              value: formatMinutes(summary.overtimeMinutes),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+/// `present` out of the month's working days. `present` already includes the
+/// late days.
+class _PresenceRing extends StatelessWidget {
+  final MonthlySummary summary;
+
+  const _PresenceRing({required this.summary});
+
+  @override
+  Widget build(BuildContext context) {
+    final ratio = summary.workingDays == 0
+        ? 0.0
+        : (summary.present / summary.workingDays).clamp(0.0, 1.0);
+
+    return SizedBox(
+      width: 108,
+      height: 108,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          CustomPaint(
+            size: const Size(108, 108),
+            painter: CurvePainter(
+              // CurvePainter takes a sweep in degrees.
+              angle: 360 * ratio,
+              colors: [nearlyDarkBlue, HexColor('#8A98E8'), HexColor('#8A98E8')],
+            ),
           ),
-        );
-      },
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                '${summary.present}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                  color: darkerText,
+                ),
+              ),
+              Text(
+                'hadir',
+                style: TextStyle(fontSize: 12, color: grey.withOpacity(0.7)),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Legend extends StatelessWidget {
+  final String label;
+  final int value;
+  final Color color;
+
+  const _Legend({
+    required this.label,
+    required this.value,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        children: [
+          Container(
+            height: 30,
+            width: 3,
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: const BorderRadius.all(Radius.circular(4)),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 12,
+                    color: grey.withOpacity(0.7),
+                  ),
+                ),
+                Text(
+                  '$value hari',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                    color: darkerText,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Footer extends StatelessWidget {
+  final String label;
+  final String value;
+
+  const _Footer({required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(fontSize: 12, color: grey.withOpacity(0.7)),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          value,
+          style: const TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+            color: darkerText,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _Failure extends StatelessWidget {
+  final String message;
+  final VoidCallback onRetry;
+
+  const _Failure({required this.message, required this.onRetry});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(message, style: const TextStyle(color: darkerText)),
+        TextButton(onPressed: onRetry, child: const Text('COBA LAGI')),
+      ],
+    );
+  }
+}
+
+class _Card extends StatelessWidget {
+  final Widget child;
+
+  const _Card({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: grey.withOpacity(0.2),
+            offset: const Offset(1.1, 1.1),
+            blurRadius: 10.0,
+          ),
+        ],
+      ),
+      child: child,
     );
   }
 }

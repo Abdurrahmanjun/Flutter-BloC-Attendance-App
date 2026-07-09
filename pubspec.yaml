@@ -45,6 +45,7 @@ dependencies:
   path_provider: ^2.0.15
   cached_network_image: ^3.2.3
   permission_handler: ^11.0.0
+  geolocator: ^13.0.1
   screenshot: ^2.1.0
   file_picker: ^8.0.0
 
@@ -53,6 +54,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   integration_test:
+    sdk: flutter
+  flutter_driver:
     sdk: flutter
 
   # Codegen for the models' .g.dart parts. json_serializable was previously a

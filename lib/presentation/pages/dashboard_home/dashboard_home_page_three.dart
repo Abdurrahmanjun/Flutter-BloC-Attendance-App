@@ -1,8 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart' as nbutils;
 
 import 'package:attendance/common/utils/colors.dart';
+import 'package:attendance/presentation/bloc/attendance/summary_bloc.dart';
+import 'package:attendance/presentation/bloc/attendance/today_bloc.dart';
+import 'package:attendance/presentation/pages/dashboard_home/components/attendance_action_card.dart';
+import 'package:attendance/presentation/pages/dashboard_home/components/hrm_diagram_card.dart';
 
 class DashboardHomePageThree extends StatefulWidget {
   const DashboardHomePageThree({super.key});
@@ -12,6 +17,15 @@ class DashboardHomePageThree extends StatefulWidget {
 }
 
 class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<TodayBloc>().add(LoadTodayEvent());
+    context
+        .read<SummaryBloc>()
+        .add(LoadSummaryEvent(SummaryBloc.currentMonth()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,133 +77,7 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
               child: SizedBox(
             child: Column(
               children: <Widget>[
-                Container(
-                  margin: const EdgeInsets.fromLTRB(0, 8, 0, 0),
-                  decoration: BoxDecoration(
-                    color: navyDark,
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(16.0),
-                        bottomLeft: Radius.circular(16.0),
-                        bottomRight: Radius.circular(16.0),
-                        topRight: Radius.circular(16.0)),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                          color: grey.withOpacity(0.2),
-                          offset: const Offset(1.1, 1.1),
-                          blurRadius: 10.0),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(24),
-                        child: Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: Column(
-                                children: <Widget>[
-                                  const Row(
-                                    children: <Widget>[
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Text(
-                                            '09:00',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18,
-                                              color: white,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Waktu terakhir check-in',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12,
-                                              color: white,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ).paddingBottom(16),
-                                  Row(
-                                    children: <Widget>[
-                                      GestureDetector(
-                                        onTap: () {
-                                          var snackbar = const SnackBar(
-                                            content: Text(
-                                                'Selamat, data berhasil ditambahkan.'),
-                                            backgroundColor: infoGreen,
-                                            margin: EdgeInsets.all(8),
-                                            behavior: SnackBarBehavior.floating,
-                                          );
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(snackbar);
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: koswaraOrange),
-                                          child: const Text(
-                                            "CHECK OUT",
-                                            style: TextStyle(
-                                              color: darkText,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ).paddingAll(16),
-                                        ).paddingBottom(8),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            Center(
-                              child: Stack(
-                                clipBehavior: Clip.none,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      width: 90,
-                                      height: 90,
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey,
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(100.0)),
-                                        border: Border.all(
-                                            width: 2,
-                                            color: Colors.grey.shade300),
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Icon(Icons.add_a_photo_outlined,
-                                              color: Colors.grey.shade300)
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ).paddingAll(16),
+                const AttendanceActionCard(),
                 // Others Menu
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -201,207 +89,26 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
                   ],
                 ).paddingOnly(left: 16, right: 16, top: 8, bottom: 20),
                 Container(
+                  width: double.infinity,
                   decoration: const BoxDecoration(
-                    color: white,
+                    color: background,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30),
                       topRight: Radius.circular(30),
                     ),
                   ),
-                  child: Column(
+                  child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      // Sales Sections
-                      const _HrmTextSection(title: "Jumlah Sales")
-                          .paddingBottom(16),
-                      Container(
-                        padding: const EdgeInsets.only(top: 16, bottom: 16),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black38,
-                              blurRadius: 1,
-                              spreadRadius: 0.5,
-                            )
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                const _ItemSalesGroup(
-                                  title: "Sales Aktif",
-                                  counter: 20,
-                                  color: infoGreen,
-                                ),
-                                8.height,
-                                const _ItemSalesGroup(
-                                  title: "Sales Non Aktif",
-                                  counter: 5,
-                                  color: infoRed,
-                                ),
-                              ],
-                            ).paddingOnly(
-                                left: 24, right: 24, top: 4, bottom: 16),
-                            const Divider(color: Colors.black38),
-                            const Text(
-                              "+ Tambah Sales Baru",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue,
-                              ),
-                            ).paddingTop(8)
-                          ],
-                        ),
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20, bottom: 4),
+                        child: _HrmTextSection(title: "Laporan Kehadiran"),
                       ),
-                      32.height,
-                      // laporan kehadiran
-                      const _HrmTextSection(title: "Laporan Kehadiran")
-                          .paddingBottom(16),
-                      // laporan kehadiran user
-                      Container(
-                        padding: const EdgeInsets.only(
-                            top: 20, bottom: 25, right: 20, left: 20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(7),
-                          color: Colors.white,
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black38,
-                              blurRadius: 1,
-                              spreadRadius: 0.5,
-                            )
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  child: const Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Absensi Kamu",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.black87,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.black38,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ).paddingRight(24),
-                                ),
-                                Container(
-                                  width: 90,
-                                  height: 90,
-                                  decoration: BoxDecoration(
-                                    color: Colors.blueGrey,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(100.0)),
-                                    border: Border.all(
-                                        width: 2, color: Colors.grey.shade300),
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      16.height,
-                      // laporan kehadiran karyawan
-                      Container(
-                        padding: const EdgeInsets.only(
-                            top: 20, bottom: 25, right: 20, left: 20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(7),
-                          color: Colors.white,
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black38,
-                              blurRadius: 1,
-                              spreadRadius: 0.5,
-                            )
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  child: const Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Absensi Karyawan",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.black87,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.black38,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ).paddingRight(24),
-                                ),
-                                Container(
-                                  width: 90,
-                                  height: 90,
-                                  decoration: BoxDecoration(
-                                    color: Colors.orange,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(100.0)),
-                                    border: Border.all(
-                                        width: 2, color: Colors.grey.shade300),
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      16.height,
+                      HrmDiagramCard(),
+                      SizedBox(height: 16),
                     ],
-                  ).paddingOnly(left: 24, right: 24, top: 32, bottom: 16),
+                  ),
                 )
               ],
             ),
@@ -444,94 +151,6 @@ class _MenuItem extends StatelessWidget {
               fontSize: 14,
               color: Colors.blue[100]),
         ),
-      ],
-    );
-  }
-}
-
-class _ItemSalesGroup extends StatelessWidget {
-  final String? title;
-  final int? counter;
-  final Color color;
-
-  const _ItemSalesGroup({
-    Key? key,
-    this.title,
-    this.counter = 0,
-    this.color = infoGreen,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Container(
-          height: 48,
-          width: 3,
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.5),
-            borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 8,
-                  bottom: 8,
-                ),
-                child: Text(
-                  '$title',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  const SizedBox(
-                    width: 28,
-                    height: 28,
-                    child: Icon(Icons.group_outlined),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 4, bottom: 3),
-                    child: Text(
-                      "$counter",
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: darkerText,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 4, bottom: 3),
-                    child: Text(
-                      'Orang',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                        letterSpacing: -0.2,
-                        color: grey.withOpacity(0.5),
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        )
       ],
     );
   }

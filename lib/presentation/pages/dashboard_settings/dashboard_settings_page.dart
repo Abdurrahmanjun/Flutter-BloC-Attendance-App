@@ -4,6 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:attendance/common/utils/colors.dart';
 import 'package:attendance/presentation/bloc/token/token_bloc.dart';
 import 'package:attendance/presentation/pages/auth/login_page.dart';
+import 'package:attendance/presentation/pages/dashboard_settings/components/dev_prefer_menu.dart';
 
 class DashboardSettingsPage extends StatefulWidget {
   const DashboardSettingsPage({super.key});
@@ -43,6 +44,7 @@ class _DashboardSettingsPageState extends State<DashboardSettingsPage> {
               ),
               onTap: () => _confirmLogout(context),
             ),
+            const DevPreferMenu(),
           ],
         ),
       ),

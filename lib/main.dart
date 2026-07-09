@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:attendance/app_theme.dart';
+import 'package:attendance/presentation/bloc/attendance/history_bloc.dart';
+import 'package:attendance/presentation/bloc/attendance/summary_bloc.dart';
+import 'package:attendance/presentation/bloc/attendance/today_bloc.dart';
 import 'package:attendance/presentation/bloc/onboarding/onboarding_bloc.dart';
 import 'package:attendance/presentation/bloc/promo/promo_bloc.dart';
 import 'package:attendance/presentation/bloc/token/token_bloc.dart';
@@ -31,6 +34,11 @@ class MyApp extends StatelessWidget {
           create: (context) =>
               di.sl<OnboardingBloc>()..add(GetOnBoardingEvent()),
         ),
+        // The dashboard pages that use these are pushed on a fresh route, so
+        // they need providers above the Navigator rather than around a page.
+        BlocProvider(create: (context) => di.sl<TodayBloc>()),
+        BlocProvider(create: (context) => di.sl<HistoryBloc>()),
+        BlocProvider(create: (context) => di.sl<SummaryBloc>()),
       ],
       child: MaterialApp(
         title: 'Attendance',

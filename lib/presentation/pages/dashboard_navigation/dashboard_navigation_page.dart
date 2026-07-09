@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:attendance/presentation/pages/dashboard_absence/dashboard_absence_page.dart';
 import 'package:attendance/presentation/pages/dashboard_home/dashboard_home_page_three.dart';
-import 'package:attendance/presentation/pages/dashboard_home/dashboard_home_page_two.dart';
 import 'package:attendance/presentation/pages/dashboard_notification/dashboard_notification_page.dart';
 import 'package:attendance/presentation/pages/dashboard_settings/dashboard_settings_page.dart';
 
@@ -17,15 +17,15 @@ class _HomeNavBarPageState extends State<HomeNavBarPage> {
   Widget callPage(int current) {
     switch (current) {
       case 0:
-        return new DashboardHomePageThree();
+        return const DashboardHomePageThree();
       case 1:
-        return new DashboardHomePageTwo();
+        return const DashboardAbsencePage();
       case 2:
-        return new DashboardNotificationPage();
+        return const DashboardNotificationPage();
       case 3:
-        return new DashboardSettingsPage();
+        return const DashboardSettingsPage();
       default:
-        return DashboardHomePageTwo();
+        return const DashboardHomePageThree();
     }
   }
 
