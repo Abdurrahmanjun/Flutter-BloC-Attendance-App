@@ -7,4 +7,5 @@ abstract class TokenRepository {
     required String password,
   });
   Future<Either<Failure, String>> getToken();
+  Future<Either<Failure, Unit>> logout();
 }

@@ -23,12 +23,15 @@ class TokenRepositoryImpl implements TokenRepository {
     required String username,
     required String password,
   }) async {
+    // LOCAL-ONLY LOGIN: the remote auth API is not available yet, so we treat a
+    // login as a local flag — persist a session token so the app knows the user
+    // is logged in. When the real API is ready, restore the remote call below.
+    //
+    //   final account =
+    //       await remoteDataSource.login(username: username, password: password);
+    //   final token = account.data!.accessToken!;
     try {
-      final account = await remoteDataSource.login(
-        username: username,
-        password: password,
-      );
-      final token = account.data!.accessToken!;
+      final token = 'local-session:$username';
       await localDataSource.setToken(value: token);
       return Right(token);
     } on ServerException {
@@ -39,16 +42,25 @@ class TokenRepositoryImpl implements TokenRepository {
   @override
   Future<Either<Failure, String>> getToken() async {
     final String? result = await localDataSource.getToken();
-    if (result != null) {
-      final isExpired = JwtDecoder.isExpired(result);
-
-      if (isExpired) {
-        return Left(ServerFailure());
-      } else {
-        return Right(result);
-      }
-    } else {
+    if (result == null) {
       return Left(EmptyCacheFailure());
     }
+
+    // A real JWT carries its own expiry; a local-session flag does not, so only
+    // apply the expiry check when the stored value is actually a JWT.
+    try {
+      if (JwtDecoder.isExpired(result)) {
+        return Left(ServerFailure());
+      }
+    } on FormatException {
+      // Not a JWT (local-session flag) — treat as a valid, non-expiring token.
+    }
+    return Right(result);
+  }
+
+  @override
+  Future<Either<Failure, Unit>> logout() async {
+    await localDataSource.clearToken();
+    return const Right(unit);
   }
 }

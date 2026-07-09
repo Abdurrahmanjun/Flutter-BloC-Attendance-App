@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 abstract class TokenLocalDataSource {
   Future<Unit> setToken({required String value});
   Future<String?> getToken();
+  Future<Unit> clearToken();
 }
 
 class TokenLocalDataSourceImpl implements TokenLocalDataSource {
@@ -21,5 +22,11 @@ class TokenLocalDataSourceImpl implements TokenLocalDataSource {
   Future<String?> getToken() async {
     final value = sharedPreferences.getString("token");
     return value;
+  }
+
+  @override
+  Future<Unit> clearToken() async {
+    await sharedPreferences.remove("token");
+    return unit;
   }
 }

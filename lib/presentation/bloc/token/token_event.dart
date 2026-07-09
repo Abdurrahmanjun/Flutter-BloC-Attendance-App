@@ -18,3 +18,5 @@ class SetTokenEvent extends TokenEvent {
 }
 
 class GetTokenEvent extends TokenEvent {}
+
+class LogoutEvent extends TokenEvent {}

@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:otaqu/common/error/failures.dart';
 import 'package:otaqu/common/strings/failures.dart';
 import 'package:otaqu/domain/usecases/get_token_use_case.dart';
+import 'package:otaqu/domain/usecases/logout_use_case.dart';
 import 'package:otaqu/domain/usecases/set_token_use_case.dart';
 
 part 'token_event.dart';
@@ -12,10 +13,12 @@ part 'token_state.dart';
 class TokenBloc extends Bloc<TokenEvent, TokenState> {
   final SetTokenUseCase setTokenUseCase;
   final GetTokenUseCase getTokenUseCase;
+  final LogoutUseCase logoutUseCase;
 
   TokenBloc({
     required this.setTokenUseCase,
     required this.getTokenUseCase,
+    required this.logoutUseCase,
   }) : super(TokenInitial()) {
     on<TokenEvent>((event, emit) async {
       if (event is SetTokenEvent) {
@@ -34,6 +37,11 @@ class TokenBloc extends Bloc<TokenEvent, TokenState> {
 
         final either = await getTokenUseCase();
         emit(_mapEventGetTokenFailureOrSuccessToState(either));
+      }
+
+      if (event is LogoutEvent) {
+        await logoutUseCase();
+        emit(LoggedOutState());
       }
     });
   }

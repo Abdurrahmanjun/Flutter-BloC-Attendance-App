@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:otaqu/common/utils/colors.dart';
+import 'package:otaqu/presentation/bloc/token/token_bloc.dart';
+import 'package:otaqu/presentation/pages/auth/login_page.dart';
 
 class DashboardSettingsPage extends StatefulWidget {
   const DashboardSettingsPage({super.key});
@@ -18,15 +22,55 @@ class _DashboardSettingsPageState extends State<DashboardSettingsPage> {
         elevation: 0,
         showBack: false,
       ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: BlocListener<TokenBloc, TokenState>(
+        listener: (context, state) {
+          if (state is LoggedOutState) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (_) => const LoginPage()),
+              (route) => false,
+            );
+          }
+        },
+        child: ListView(
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.redAccent),
+              title: const Text(
+                'Logout',
+                style: TextStyle(
+                    color: Colors.redAccent, fontWeight: FontWeight.bold),
+              ),
+              onTap: () => _confirmLogout(context),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _confirmLogout(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Logout'),
+        content: const Text('Apakah kamu yakin ingin keluar?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Batal'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(dialogContext);
+              BlocProvider.of<TokenBloc>(context).add(LogoutEvent());
+            },
+            child: const Text(
+              'Logout',
+              style: TextStyle(color: navyDark),
+            ),
+          ),
+        ],
       ),
     );
   }

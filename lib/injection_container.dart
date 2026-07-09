@@ -20,6 +20,7 @@ import 'package:otaqu/domain/usecases/get_destination_use_case.dart';
 import 'package:otaqu/domain/usecases/get_last_destination_use_case.dart';
 import 'package:otaqu/domain/usecases/get_onboarding_use_case.dart';
 import 'package:otaqu/domain/usecases/get_token_use_case.dart';
+import 'package:otaqu/domain/usecases/logout_use_case.dart';
 import 'package:otaqu/domain/usecases/set_destination_use_case.dart';
 import 'package:otaqu/domain/usecases/set_last_destination_use_case.dart';
 import 'package:otaqu/domain/usecases/set_onboarding_use_case.dart';
@@ -45,6 +46,7 @@ Future<void> init() async {
   sl.registerFactory(() => TokenBloc(
         setTokenUseCase: sl(),
         getTokenUseCase: sl(),
+        logoutUseCase: sl(),
       ));
   sl.registerFactory(() => DestinationBloc(
         setDestinationUseCase: sl(),
@@ -65,6 +67,7 @@ Future<void> init() async {
 // Usecases
   sl.registerLazySingleton(() => SetTokenUseCase(sl()));
   sl.registerLazySingleton(() => GetTokenUseCase(sl()));
+  sl.registerLazySingleton(() => LogoutUseCase(sl()));
   sl.registerLazySingleton(() => SetDestinationUseCase(sl()));
   sl.registerLazySingleton(() => GetDestinationUseCase(sl()));
   sl.registerLazySingleton(() => SetLastDestinationUseCase(sl()));

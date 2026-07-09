@@ -20,6 +20,8 @@ class LoadedGetTokenState extends TokenState {
   List<Object> get props => [token];
 }
 
+class LoggedOutState extends TokenState {}
+
 class ErrorGetTokenState extends TokenState {
   final String message;
 
