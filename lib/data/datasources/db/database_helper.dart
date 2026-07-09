@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:otaqu/data/models/destination/destination.dart';
+import 'package:attendance/data/models/destination/destination.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
@@ -23,7 +23,7 @@ class DatabaseHelper {
 
   Future<Database> _initDb() async {
     final path = await getDatabasesPath();
-    final databasePath = '$path/otaqu.db';
+    final databasePath = '$path/attendance.db';
 
     var db = await openDatabase(
       databasePath,

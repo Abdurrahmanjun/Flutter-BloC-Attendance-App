@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:otaqu/common/error/failures.dart';
+import 'package:attendance/common/error/failures.dart';
 
 abstract class OnboardingRepository {
   Future<Either<Failure, String>> setOnboarding();

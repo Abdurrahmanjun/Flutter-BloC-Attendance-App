@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart' as nbutils;
-import 'package:otaqu/common/utils/colors.dart';
-import 'package:otaqu/common/utils/constants.dart';
-import 'package:otaqu/presentation/pages/dashboard_home/components/hrm_diagram_card.dart';
-import 'package:otaqu/presentation/pages/profile/profile_page.dart';
+import 'package:attendance/common/utils/colors.dart';
+import 'package:attendance/common/utils/constants.dart';
+import 'package:attendance/presentation/pages/dashboard_home/components/hrm_diagram_card.dart';
+import 'package:attendance/presentation/pages/profile/profile_page.dart';
 
 class DashboardHomePageTwo extends StatefulWidget {
   const DashboardHomePageTwo({super.key});

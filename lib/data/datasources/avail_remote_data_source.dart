@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:otaqu/data/models/avail/base_avail.dart';
+import 'package:attendance/data/models/avail/base_avail.dart';
 
 abstract class AvailRemoteDataSource {
   Future<BaseAvail> getAvail({

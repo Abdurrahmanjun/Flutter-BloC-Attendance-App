@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:otaqu/common/utils/colors.dart';
-import 'package:otaqu/presentation/bloc/token/token_bloc.dart';
-import 'package:otaqu/presentation/pages/auth/login_page.dart';
+import 'package:attendance/common/utils/colors.dart';
+import 'package:attendance/presentation/bloc/token/token_bloc.dart';
+import 'package:attendance/presentation/pages/auth/login_page.dart';
 
 class DashboardSettingsPage extends StatefulWidget {
   const DashboardSettingsPage({super.key});

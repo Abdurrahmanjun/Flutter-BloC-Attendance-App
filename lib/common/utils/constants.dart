@@ -5,11 +5,6 @@ const mBaseUrl = 'http://115.85.80.34';
 const mBaseUrlPort = '4100';
 const mFirebaseUrl = 'https://qr-menu-laravel.web.app';
 
-class DemoDetail {
-  static const demoEmail = 'otaqu';
-  static const demoPassword = 'qwerty';
-}
-
 class AppThemeMode {
   static const ThemeModeLight = 1;
   static const ThemeModeDark = 2;
@@ -33,7 +28,8 @@ List<OnBoarding> onboardingImagePaths = [
   OnBoarding(
       imageUrl: "assets/images/onboarding-2.png",
       title: "Bepergian Mudah",
-      subtitle: "Dengan OTAQU kamu akan sangat mudah memesan tempat tujuanmu"),
+      subtitle:
+          "Dengan aplikasi ini kamu akan sangat mudah mencatat kehadiran"),
 ];
 
 // MODEL

@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:otaqu/common/error/failures.dart';
-import 'package:otaqu/data/models/avail/base_avail.dart';
-import 'package:otaqu/domain/repositories/avail_repository.dart';
+import 'package:attendance/common/error/failures.dart';
+import 'package:attendance/data/models/avail/base_avail.dart';
+import 'package:attendance/domain/repositories/avail_repository.dart';
 
 class GetAvailUseCase {
   final AvailRepository repository;

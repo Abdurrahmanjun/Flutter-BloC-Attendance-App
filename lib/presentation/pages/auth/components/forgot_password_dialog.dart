@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:otaqu/common/utils/colors.dart';
-import 'package:otaqu/common/utils/common.dart';
+import 'package:attendance/common/utils/colors.dart';
+import 'package:attendance/common/utils/common.dart';
 
 class ForgotPasswordDialog extends StatefulWidget {
   static String tag = '/ForgotPasswordScreen';

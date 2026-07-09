@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:otaqu/data/models/login/base_login.dart';
+import 'package:attendance/data/models/login/base_login.dart';
 
 abstract class TokenRemoteDataSource {
   Future<BaseLogin> login({

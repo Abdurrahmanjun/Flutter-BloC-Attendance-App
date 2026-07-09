@@ -1,8 +1,8 @@
-import 'package:otaqu/common/error/exceptions.dart';
-import 'package:otaqu/common/error/failures.dart';
+import 'package:attendance/common/error/exceptions.dart';
+import 'package:attendance/common/error/failures.dart';
 import 'package:dartz/dartz.dart';
-import 'package:otaqu/data/datasources/onboarding_local_data_source.dart';
-import 'package:otaqu/domain/repositories/onboarding_repository.dart';
+import 'package:attendance/data/datasources/onboarding_local_data_source.dart';
+import 'package:attendance/domain/repositories/onboarding_repository.dart';
 
 class OnboardingRepositoryImpl implements OnboardingRepository {
   final OnboardingLocalDataSource localDataSource;

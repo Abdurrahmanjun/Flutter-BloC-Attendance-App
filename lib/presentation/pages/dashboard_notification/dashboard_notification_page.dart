@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:otaqu/presentation/pages/dashboard_notification/components/activities.dart';
+import 'package:attendance/presentation/pages/dashboard_notification/components/activities.dart';
 
 class DashboardNotificationPage extends StatefulWidget {
   const DashboardNotificationPage({super.key});

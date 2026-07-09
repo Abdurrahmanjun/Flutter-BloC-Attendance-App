@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:otaqu/common/error/failures.dart';
-import 'package:otaqu/common/strings/failures.dart';
-import 'package:otaqu/data/models/destination/destination.dart';
-import 'package:otaqu/domain/usecases/get_destination_use_case.dart';
-import 'package:otaqu/domain/usecases/set_destination_use_case.dart';
+import 'package:attendance/common/error/failures.dart';
+import 'package:attendance/common/strings/failures.dart';
+import 'package:attendance/data/models/destination/destination.dart';
+import 'package:attendance/domain/usecases/get_destination_use_case.dart';
+import 'package:attendance/domain/usecases/set_destination_use_case.dart';
 
 part 'destination_event.dart';
 part 'destination_state.dart';

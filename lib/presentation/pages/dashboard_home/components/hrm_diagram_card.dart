@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import 'package:otaqu/common/utils/colors.dart';
-import 'package:otaqu/common/utils/constants.dart';
+import 'package:attendance/common/utils/colors.dart';
+import 'package:attendance/common/utils/constants.dart';
 
 class HrmDiagramCard extends StatelessWidget {
   final AnimationController? animationController;

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:otaqu/presentation/pages/auth/login_page.dart';
-import 'package:otaqu/presentation/pages/dashboard_absence/dashboard_absence_page.dart';
-import 'package:otaqu/presentation/pages/dashboard_home/dashboard_home_page.dart';
-import 'package:otaqu/presentation/pages/dashboard_home/dashboard_home_page_three.dart';
-import 'package:otaqu/presentation/pages/dashboard_home/dashboard_home_page_two.dart';
-import 'package:otaqu/presentation/pages/dashboard_notification/dashboard_notification_page.dart';
-import 'package:otaqu/presentation/pages/dashboard_settings/dashboard_settings_page.dart';
+import 'package:attendance/presentation/pages/auth/login_page.dart';
+import 'package:attendance/presentation/pages/dashboard_absence/dashboard_absence_page.dart';
+import 'package:attendance/presentation/pages/dashboard_home/dashboard_home_page.dart';
+import 'package:attendance/presentation/pages/dashboard_home/dashboard_home_page_three.dart';
+import 'package:attendance/presentation/pages/dashboard_home/dashboard_home_page_two.dart';
+import 'package:attendance/presentation/pages/dashboard_notification/dashboard_notification_page.dart';
+import 'package:attendance/presentation/pages/dashboard_settings/dashboard_settings_page.dart';
 
 class HomeNavBarPage extends StatefulWidget {
   @override

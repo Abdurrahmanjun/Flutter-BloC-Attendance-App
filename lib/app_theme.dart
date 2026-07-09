@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:otaqu/common/utils/colors.dart';
+import 'package:attendance/common/utils/colors.dart';
 
 class AppTheme {
   AppTheme._();

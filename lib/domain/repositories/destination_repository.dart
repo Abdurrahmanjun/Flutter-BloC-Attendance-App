@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:otaqu/common/error/failures.dart';
-import 'package:otaqu/data/models/destination/destination.dart';
+import 'package:attendance/common/error/failures.dart';
+import 'package:attendance/data/models/destination/destination.dart';
 
 abstract class DestinationRepository {
   Future<Either<Failure, List<Destination>>> setDestination({

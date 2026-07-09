@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:otaqu/common/utils/format_functions.dart';
+import 'package:attendance/common/utils/format_functions.dart';
 
 class AvailCard extends StatelessWidget {
   const AvailCard({

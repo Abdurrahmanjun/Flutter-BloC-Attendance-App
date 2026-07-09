@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:otaqu/app_theme.dart';
-import 'package:otaqu/presentation/bloc/avail/avail_bloc.dart';
-import 'package:otaqu/presentation/bloc/destination/destination_bloc.dart';
-import 'package:otaqu/presentation/bloc/last_destination/last_destination_bloc.dart';
-import 'package:otaqu/presentation/bloc/onboarding/onboarding_bloc.dart';
-import 'package:otaqu/presentation/bloc/promo/promo_bloc.dart';
-import 'package:otaqu/presentation/bloc/token/token_bloc.dart';
-import 'package:otaqu/presentation/pages/splash/splash_page.dart';
+import 'package:attendance/app_theme.dart';
+import 'package:attendance/presentation/bloc/avail/avail_bloc.dart';
+import 'package:attendance/presentation/bloc/destination/destination_bloc.dart';
+import 'package:attendance/presentation/bloc/last_destination/last_destination_bloc.dart';
+import 'package:attendance/presentation/bloc/onboarding/onboarding_bloc.dart';
+import 'package:attendance/presentation/bloc/promo/promo_bloc.dart';
+import 'package:attendance/presentation/bloc/token/token_bloc.dart';
+import 'package:attendance/presentation/pages/splash/splash_page.dart';
 import 'injection_container.dart' as di;
 
 void main() async {
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Otaqu',
+        title: 'Attendance',
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         home: const SplashPage(),

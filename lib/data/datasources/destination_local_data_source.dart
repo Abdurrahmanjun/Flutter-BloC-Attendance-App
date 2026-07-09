@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:otaqu/data/models/destination/destination.dart';
+import 'package:attendance/data/models/destination/destination.dart';
 
 import 'db/database_helper.dart';
 

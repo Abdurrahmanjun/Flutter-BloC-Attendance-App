@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:otaqu/common/utils/constants.dart';
-import 'package:otaqu/presentation/bloc/last_destination/last_destination_bloc.dart';
-import 'package:otaqu/presentation/bloc/promo/promo_bloc.dart';
-import 'package:otaqu/presentation/widgets/card_search.dart';
+import 'package:attendance/common/utils/constants.dart';
+import 'package:attendance/presentation/bloc/last_destination/last_destination_bloc.dart';
+import 'package:attendance/presentation/bloc/promo/promo_bloc.dart';
+import 'package:attendance/presentation/widgets/card_search.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

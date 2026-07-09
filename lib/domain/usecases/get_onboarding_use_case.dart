@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:otaqu/common/error/failures.dart';
-import 'package:otaqu/domain/repositories/onboarding_repository.dart';
+import 'package:attendance/common/error/failures.dart';
+import 'package:attendance/domain/repositories/onboarding_repository.dart';
 
 class GetOnboardingUseCase {
   final OnboardingRepository repository;

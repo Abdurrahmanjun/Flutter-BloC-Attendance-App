@@ -4,7 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:otaqu/common/utils/colors.dart';
+import 'package:attendance/common/utils/colors.dart';
 import 'package:html/parser.dart';
 
 List<LanguageDataModel> languageList() {

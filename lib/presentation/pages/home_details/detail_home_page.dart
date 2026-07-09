@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:otaqu/common/utils/style_widget.dart';
-import 'package:otaqu/presentation/bloc/avail/avail_bloc.dart';
-import 'package:otaqu/presentation/widgets/avail_card.dart';
-import 'package:otaqu/presentation/widgets/shimmer_custom.dart';
+import 'package:attendance/common/utils/style_widget.dart';
+import 'package:attendance/presentation/bloc/avail/avail_bloc.dart';
+import 'package:attendance/presentation/widgets/avail_card.dart';
+import 'package:attendance/presentation/widgets/shimmer_custom.dart';
 
 class DetailHomePage extends StatelessWidget {
   const DetailHomePage({required this.destination, super.key});

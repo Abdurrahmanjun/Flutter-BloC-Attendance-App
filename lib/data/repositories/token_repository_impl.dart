@@ -1,11 +1,11 @@
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:otaqu/common/error/exceptions.dart';
-import 'package:otaqu/common/error/failures.dart';
+import 'package:attendance/common/error/exceptions.dart';
+import 'package:attendance/common/error/failures.dart';
 import 'package:dartz/dartz.dart';
-import 'package:otaqu/common/network/network_info.dart';
-import 'package:otaqu/data/datasources/token_local_data_source.dart';
-import 'package:otaqu/data/datasources/token_remote_data_source.dart';
-import 'package:otaqu/domain/repositories/token_repository.dart';
+import 'package:attendance/common/network/network_info.dart';
+import 'package:attendance/data/datasources/token_local_data_source.dart';
+import 'package:attendance/data/datasources/token_remote_data_source.dart';
+import 'package:attendance/domain/repositories/token_repository.dart';
 
 class TokenRepositoryImpl implements TokenRepository {
   final TokenRemoteDataSource remoteDataSource;

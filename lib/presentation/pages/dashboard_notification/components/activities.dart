@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:otaqu/common/utils/colors.dart';
+import 'package:attendance/common/utils/colors.dart';
 
 class Activities extends StatefulWidget {
   const Activities({Key? key}) : super(key: key);

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:otaqu/common/utils/style_widget.dart';
-import 'package:otaqu/presentation/bloc/avail/avail_bloc.dart';
-import 'package:otaqu/presentation/bloc/destination/destination_bloc.dart';
-import 'package:otaqu/presentation/bloc/last_destination/last_destination_bloc.dart';
-import 'package:otaqu/presentation/pages/home_details/detail_home_page.dart';
-import 'package:otaqu/presentation/widgets/form_search.dart';
-import 'package:otaqu/presentation/widgets/item_location.dart';
+import 'package:attendance/common/utils/style_widget.dart';
+import 'package:attendance/presentation/bloc/avail/avail_bloc.dart';
+import 'package:attendance/presentation/bloc/destination/destination_bloc.dart';
+import 'package:attendance/presentation/bloc/last_destination/last_destination_bloc.dart';
+import 'package:attendance/presentation/pages/home_details/detail_home_page.dart';
+import 'package:attendance/presentation/widgets/form_search.dart';
+import 'package:attendance/presentation/widgets/item_location.dart';
 
 class CardSearch extends StatelessWidget {
   const CardSearch({

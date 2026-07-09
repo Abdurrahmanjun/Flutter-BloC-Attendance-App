@@ -1,10 +1,10 @@
-import 'package:otaqu/common/error/exceptions.dart';
-import 'package:otaqu/common/error/failures.dart';
+import 'package:attendance/common/error/exceptions.dart';
+import 'package:attendance/common/error/failures.dart';
 import 'package:dartz/dartz.dart';
-import 'package:otaqu/common/network/network_info.dart';
-import 'package:otaqu/data/datasources/avail_remote_data_source.dart';
-import 'package:otaqu/data/models/avail/base_avail.dart';
-import 'package:otaqu/domain/repositories/avail_repository.dart';
+import 'package:attendance/common/network/network_info.dart';
+import 'package:attendance/data/datasources/avail_remote_data_source.dart';
+import 'package:attendance/data/models/avail/base_avail.dart';
+import 'package:attendance/domain/repositories/avail_repository.dart';
 
 class AvailRepositoryImpl implements AvailRepository {
   final AvailRemoteDataSource remoteDataSource;

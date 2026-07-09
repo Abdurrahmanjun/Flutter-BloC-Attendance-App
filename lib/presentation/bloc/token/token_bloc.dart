@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:otaqu/common/error/failures.dart';
-import 'package:otaqu/common/strings/failures.dart';
-import 'package:otaqu/domain/usecases/get_token_use_case.dart';
-import 'package:otaqu/domain/usecases/logout_use_case.dart';
-import 'package:otaqu/domain/usecases/set_token_use_case.dart';
+import 'package:attendance/common/error/failures.dart';
+import 'package:attendance/common/strings/failures.dart';
+import 'package:attendance/domain/usecases/get_token_use_case.dart';
+import 'package:attendance/domain/usecases/logout_use_case.dart';
+import 'package:attendance/domain/usecases/set_token_use_case.dart';
 
 part 'token_event.dart';
 part 'token_state.dart';

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:otaqu/common/utils/colors.dart';
-import 'package:otaqu/common/utils/constants.dart';
-import 'package:otaqu/presentation/bloc/destination/destination_bloc.dart';
-import 'package:otaqu/presentation/bloc/token/token_bloc.dart';
-import 'package:otaqu/presentation/pages/auth/components/forgot_password_dialog.dart';
-import 'package:otaqu/presentation/pages/dashboard_navigation/dashboard_navigation_page.dart';
-import 'package:otaqu/common/utils/style_widget.dart';
+import 'package:attendance/common/utils/colors.dart';
+import 'package:attendance/presentation/bloc/destination/destination_bloc.dart';
+import 'package:attendance/presentation/bloc/token/token_bloc.dart';
+import 'package:attendance/presentation/pages/auth/components/forgot_password_dialog.dart';
+import 'package:attendance/presentation/pages/dashboard_navigation/dashboard_navigation_page.dart';
+import 'package:attendance/common/utils/style_widget.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,10 +16,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // Prefilled with the demo credentials so the existing backend authenticates
-  // out of the box. Replace once the real attendance API is available.
-  final _nikController = TextEditingController(text: DemoDetail.demoEmail);
-  final _passwordController = TextEditingController(text: DemoDetail.demoPassword);
+  final _nikController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   void dispose() {

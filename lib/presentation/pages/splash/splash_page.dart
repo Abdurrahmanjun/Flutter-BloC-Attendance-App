@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:otaqu/presentation/bloc/destination/destination_bloc.dart';
-import 'package:otaqu/presentation/bloc/onboarding/onboarding_bloc.dart';
-import 'package:otaqu/presentation/bloc/token/token_bloc.dart';
-import 'package:otaqu/presentation/pages/auth/login_page.dart';
-import 'package:otaqu/presentation/pages/dashboard_navigation/dashboard_navigation_page.dart';
-import 'package:otaqu/presentation/pages/onboarding/onboarding_page.dart';
+import 'package:attendance/presentation/bloc/destination/destination_bloc.dart';
+import 'package:attendance/presentation/bloc/onboarding/onboarding_bloc.dart';
+import 'package:attendance/presentation/bloc/token/token_bloc.dart';
+import 'package:attendance/presentation/pages/auth/login_page.dart';
+import 'package:attendance/presentation/pages/dashboard_navigation/dashboard_navigation_page.dart';
+import 'package:attendance/presentation/pages/onboarding/onboarding_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:otaqu/data/models/destination/destination.dart';
-import 'package:otaqu/data/models/destination/base_destination.dart';
+import 'package:attendance/data/models/destination/destination.dart';
+import 'package:attendance/data/models/destination/base_destination.dart';
 
 abstract class DestinationRemoteDataSource {
   Future<List<Destination>> getDestination({required String token});

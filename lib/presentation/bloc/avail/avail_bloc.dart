@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:otaqu/common/error/failures.dart';
-import 'package:otaqu/common/strings/failures.dart';
-import 'package:otaqu/data/models/avail/base_avail.dart';
-import 'package:otaqu/domain/usecases/get_avail_use_case.dart';
+import 'package:attendance/common/error/failures.dart';
+import 'package:attendance/common/strings/failures.dart';
+import 'package:attendance/data/models/avail/base_avail.dart';
+import 'package:attendance/domain/usecases/get_avail_use_case.dart';
 
 part 'avail_event.dart';
 part 'avail_state.dart';

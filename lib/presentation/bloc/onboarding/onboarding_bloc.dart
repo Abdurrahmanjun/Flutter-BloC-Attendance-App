@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:otaqu/common/error/failures.dart';
-import 'package:otaqu/common/utils/constants.dart';
-import 'package:otaqu/domain/usecases/get_onboarding_use_case.dart';
-import 'package:otaqu/domain/usecases/set_onboarding_use_case.dart';
+import 'package:attendance/common/error/failures.dart';
+import 'package:attendance/common/utils/constants.dart';
+import 'package:attendance/domain/usecases/get_onboarding_use_case.dart';
+import 'package:attendance/domain/usecases/set_onboarding_use_case.dart';
 
 part 'onboarding_event.dart';
 part 'onboarding_state.dart';

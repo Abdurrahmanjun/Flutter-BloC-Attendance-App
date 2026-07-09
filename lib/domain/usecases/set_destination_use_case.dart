@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:otaqu/common/error/failures.dart';
-import 'package:otaqu/data/models/destination/destination.dart';
-import 'package:otaqu/domain/repositories/destination_repository.dart';
+import 'package:attendance/common/error/failures.dart';
+import 'package:attendance/data/models/destination/destination.dart';
+import 'package:attendance/domain/repositories/destination_repository.dart';
 
 class SetDestinationUseCase {
   final DestinationRepository repository;

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:otaqu/common/utils/constants.dart';
+import 'package:attendance/common/utils/constants.dart';
 
 part 'promo_event.dart';
 part 'promo_state.dart';
