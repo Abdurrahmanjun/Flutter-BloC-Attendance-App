@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:attendance/app_theme.dart';
-import 'package:attendance/presentation/bloc/avail/avail_bloc.dart';
-import 'package:attendance/presentation/bloc/destination/destination_bloc.dart';
-import 'package:attendance/presentation/bloc/last_destination/last_destination_bloc.dart';
 import 'package:attendance/presentation/bloc/onboarding/onboarding_bloc.dart';
 import 'package:attendance/presentation/bloc/promo/promo_bloc.dart';
 import 'package:attendance/presentation/bloc/token/token_bloc.dart';
@@ -28,17 +25,7 @@ class MyApp extends StatelessWidget {
           create: (_) => di.sl<TokenBloc>()..add(GetTokenEvent()),
         ),
         BlocProvider(
-          create: (context) => di.sl<DestinationBloc>(),
-        ),
-        BlocProvider(
-          create: (context) =>
-              di.sl<LastDestinationBloc>()..add(GetLastDestinationEvent()),
-        ),
-        BlocProvider(
           create: (context) => di.sl<PromoBloc>(),
-        ),
-        BlocProvider(
-          create: (context) => di.sl<AvailBloc>(),
         ),
         BlocProvider(
           create: (context) =>

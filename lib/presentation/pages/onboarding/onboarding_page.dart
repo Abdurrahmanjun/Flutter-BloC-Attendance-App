@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:attendance/common/utils/constants.dart';
 import 'package:attendance/presentation/bloc/onboarding/onboarding_bloc.dart';
 import 'package:attendance/presentation/pages/auth/login_page.dart';
-import 'package:attendance/presentation/pages/dashboard_home/dashboard_home_page.dart';
-import 'package:attendance/presentation/pages/dashboard_navigation/dashboard_navigation_page.dart';
 import 'package:attendance/presentation/pages/onboarding/components/onboarding_content_component.dart';
 
 class OnBoardingPage extends StatefulWidget {

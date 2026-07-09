@@ -39,7 +39,6 @@ dependencies:
 
   # Persistance Data
   shared_preferences: ^2.0.15
-  sqflite: ^2.2.2
 
   # Used for image save and pick
   image_picker: ^1.0.2

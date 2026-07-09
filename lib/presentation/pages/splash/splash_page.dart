@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:attendance/presentation/bloc/destination/destination_bloc.dart';
 import 'package:attendance/presentation/bloc/token/token_bloc.dart';
 import 'package:attendance/presentation/pages/auth/login_page.dart';
 import 'package:attendance/presentation/pages/dashboard_navigation/dashboard_navigation_page.dart';
@@ -50,8 +49,6 @@ class _SplashPageState extends State<SplashPage> {
 
     // Valid persisted token -> already logged in -> go to the dashboard.
     if (tokenState is LoadedGetTokenState) {
-      BlocProvider.of<DestinationBloc>(context)
-          .add(GetDestinationEvent(token: tokenState.token));
       _go(HomeNavBarPage());
       return;
     }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:attendance/common/utils/colors.dart';
-import 'package:attendance/presentation/bloc/destination/destination_bloc.dart';
 import 'package:attendance/presentation/bloc/token/token_bloc.dart';
 import 'package:attendance/presentation/pages/auth/components/forgot_password_dialog.dart';
 import 'package:attendance/presentation/pages/dashboard_navigation/dashboard_navigation_page.dart';
@@ -52,10 +51,6 @@ class _LoginPageState extends State<LoginPage> {
       body: BlocListener<TokenBloc, TokenState>(
         listener: (context, state) {
           if (state is LoadedGetTokenState) {
-            // Token persisted = "already logged in" flag. Preload dashboard
-            // data, then move on to the dashboard.
-            BlocProvider.of<DestinationBloc>(context)
-                .add(GetDestinationEvent(token: state.token));
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (_) => HomeNavBarPage()),
