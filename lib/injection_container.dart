@@ -143,8 +143,6 @@ Future<void> init() async {
   sl.registerLazySingleton(() => InternetConnectionChecker());
   sl.registerLazySingleton<String>(() => mBaseUrl,
       instanceName: InjectionInstance.base);
-  sl.registerLazySingleton<String>(() => mBaseUrlPort,
-      instanceName: InjectionInstance.port);
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
   sl.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());

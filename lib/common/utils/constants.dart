@@ -1,8 +1,11 @@
 // BASE URL
 import 'dart:ui';
 
-const mBaseUrl = 'http://115.85.80.34';
-const mBaseUrlPort = '4100';
+/// Override with `flutter run --dart-define=BASE_URL=http://localhost:4100`.
+const mBaseUrl = String.fromEnvironment(
+  'BASE_URL',
+  defaultValue: 'http://localhost:4100',
+);
 const mFirebaseUrl = 'https://qr-menu-laravel.web.app';
 
 class AppThemeMode {
