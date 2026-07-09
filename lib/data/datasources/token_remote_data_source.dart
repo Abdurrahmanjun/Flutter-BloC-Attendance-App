@@ -1,10 +1,11 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:attendance/data/models/login/base_login.dart';
+
+import 'package:attendance/common/network/api_response.dart';
+import 'package:attendance/data/models/auth/auth_token.dart';
 
 abstract class TokenRemoteDataSource {
-  Future<BaseLogin> login({
+  /// Throws [DioException] on any non-2xx; the repository maps it to a Failure.
+  Future<AuthToken> login({
     required String username,
     required String password,
   });
@@ -12,30 +13,32 @@ abstract class TokenRemoteDataSource {
 
 class TokenRemoteDataSourceImpl implements TokenRemoteDataSource {
   final Dio dio;
-  final String baseUrl;
 
-  TokenRemoteDataSourceImpl({
-    required this.dio,
-    required this.baseUrl,
-  });
+  TokenRemoteDataSourceImpl({required this.dio});
 
   @override
-  Future<BaseLogin> login({
+  Future<AuthToken> login({
     required String username,
     required String password,
   }) async {
-    String url = "$baseUrl/utilization/api/auth/login";
-    Map<String, String> body = {
-      "username": username,
-      "password": password,
-    };
-
-    var response = await dio.postUri(
-      Uri.parse(url),
-      data: json.encode(body),
+    final response = await dio.post<Map<String, dynamic>>(
+      '/api/auth/login',
+      data: {'username': username, 'password': password},
     );
 
-    var result = BaseLogin.fromJson(response.data);
-    return result;
+    final envelope = ApiResponse<AuthToken>.fromJson(
+      response.data!,
+      (data) => AuthToken.fromJson(data as Map<String, dynamic>),
+    );
+
+    final token = envelope.data;
+    if (token == null) {
+      throw DioException(
+        requestOptions: response.requestOptions,
+        response: response,
+        message: envelope.message,
+      );
+    }
+    return token;
   }
 }

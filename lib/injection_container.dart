@@ -63,10 +63,7 @@ Future<void> init() async {
 
 // Datasources
   sl.registerLazySingleton<TokenRemoteDataSource>(
-      () => TokenRemoteDataSourceImpl(
-            dio: sl(),
-            baseUrl: sl(instanceName: InjectionInstance.base),
-          ));
+      () => TokenRemoteDataSourceImpl(dio: sl()));
 
   sl.registerLazySingleton<TokenLocalDataSource>(
       () => TokenLocalDataSourceImpl(sharedPreferences: sl()));

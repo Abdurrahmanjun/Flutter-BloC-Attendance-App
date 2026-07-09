@@ -19,7 +19,7 @@ dependencies:
 
   # Common packages
   nb_utils: ^6.0.0
-  google_fonts: ^5.1.0
+  google_fonts: ^6.2.1
   lottie: ^2.4.0
 
   # State Management Technique
@@ -51,6 +51,8 @@ dependencies:
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
+    sdk: flutter
+  integration_test:
     sdk: flutter
 
   # Codegen for the models' .g.dart parts. json_serializable was previously a
