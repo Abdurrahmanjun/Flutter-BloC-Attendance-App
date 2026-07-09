@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:attendance/common/error/failures.dart';
-import 'package:attendance/common/strings/failures.dart';
 import 'package:attendance/domain/usecases/get_token_use_case.dart';
 import 'package:attendance/domain/usecases/logout_use_case.dart';
 import 'package:attendance/domain/usecases/set_token_use_case.dart';
@@ -49,26 +48,12 @@ class TokenBloc extends Bloc<TokenEvent, TokenState> {
   TokenState _mapEventGetTokenFailureOrSuccessToState(
       Either<Failure, String> either) {
     return either.fold(
-      (failure) => ErrorGetTokenState(message: _mapFailureToMessage(failure)),
+      // Every Failure carries a renderable message; for API errors it is the
+      // envelope's `message` verbatim.
+      (failure) => ErrorGetTokenState(message: failure.message),
       (success) {
         return LoadedGetTokenState(token: success);
       },
     );
-  }
-
-  String _mapFailureToMessage(Failure failure) {
-    switch (failure.runtimeType) {
-      case ServerFailure:
-        return SERVER_FAILURE_MESSAGE;
-
-      case EmptyCacheFailure:
-        return EMPTY_CACHE_FAILURE_MESSAGE;
-
-      case OfflineFailure:
-        return OFFLINE_FAILURE_MESSAGE;
-
-      default:
-        return "Unexpected Error, Please try again later";
-    }
   }
 }

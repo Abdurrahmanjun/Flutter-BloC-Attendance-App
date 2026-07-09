@@ -33,7 +33,7 @@ dependencies:
   dio: ^5.3.2
   equatable: ^2.0.5
   internet_connection_checker: ^1.0.0+1
-  json_serializable: ^6.5.4
+  json_annotation: ^4.8.1
   jwt_decoder: ^2.0.1
   html: ^0.15.4
 
@@ -52,6 +52,12 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+
+  # Codegen for the models' .g.dart parts. json_serializable was previously a
+  # runtime dependency with no build_runner, so the committed .g.dart files
+  # could not actually be regenerated.
+  build_runner: ^2.4.6
+  json_serializable: ^6.5.4
 
 # win32 <5.5.4 uses UnmodifiableUint8ListView, removed in Dart 3.9. Pin a
 # compatible 5.x (accepted by all its consumers) so the transitive dep builds.

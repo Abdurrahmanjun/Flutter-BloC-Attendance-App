@@ -19,6 +19,7 @@ import 'package:attendance/presentation/bloc/promo/promo_bloc.dart';
 import 'package:attendance/presentation/bloc/token/token_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'common/network/dio_client.dart';
 import 'common/network/network_info.dart';
 import 'package:get_it/get_it.dart';
 
@@ -79,7 +80,10 @@ Future<void> init() async {
   sl.registerLazySingleton<NetWorkInfo>(() => NetworkInfoImpl(sl()));
 
 // External
-  sl.registerLazySingleton(() => Dio());
+  sl.registerLazySingleton<Dio>(() => buildDio(
+        baseUrl: sl(instanceName: InjectionInstance.base),
+        tokenLocalDataSource: sl(),
+      ));
   sl.registerLazySingleton(() => InternetConnectionChecker());
   sl.registerLazySingleton<String>(() => mBaseUrl,
       instanceName: InjectionInstance.base);
