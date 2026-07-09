@@ -14,14 +14,6 @@ class AppThemeMode {
   static const ThemeModeSystem = 0;
 }
 
-List<String> promoImagePaths = [
-  "assets/images/new-year.png",
-  "assets/images/winter.png",
-  "assets/images/explore.png",
-  "assets/images/hammersonic.jpg",
-  "assets/images/tour-yogya.png",
-];
-
 List<OnBoarding> onboardingImagePaths = [
   OnBoarding(
       imageUrl: "assets/images/onboarding-1.png",

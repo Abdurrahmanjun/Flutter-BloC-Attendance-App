@@ -1,104 +1,198 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
-import 'package:attendance/common/utils/colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nb_utils/nb_utils.dart' hide white;
 
+import 'package:attendance/common/utils/colors.dart';
+import 'package:attendance/common/utils/format_functions.dart';
+import 'package:attendance/data/models/notification/app_notification.dart';
+import 'package:attendance/presentation/bloc/notification/notification_bloc.dart';
+
+/// `GET /api/notifications` — replaces the hardcoded five-item feed.
 class Activities extends StatefulWidget {
-  const Activities({Key? key}) : super(key: key);
+  const Activities({super.key});
 
   @override
-  _ActivitiesState createState() => _ActivitiesState();
+  State<Activities> createState() => _ActivitiesState();
 }
 
 class _ActivitiesState extends State<Activities> {
   @override
+  void initState() {
+    super.initState();
+    context.read<NotificationBloc>().add(LoadNotificationsEvent());
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: EdgeInsets.fromLTRB(16, 0, 8, 8),
-            child: const Text(
-              "Recent",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: deactivatedText),
+    return BlocBuilder<NotificationBloc, NotificationState>(
+      builder: (context, state) {
+        if (state is NotificationFailure) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(state.message, textAlign: TextAlign.center),
+                TextButton(
+                  onPressed: () => context
+                      .read<NotificationBloc>()
+                      .add(LoadNotificationsEvent()),
+                  child: const Text('COBA LAGI'),
+                ),
+              ],
             ),
-          ),
-          Flexible(
-            child: ListView.builder(
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                return Container(
-                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Color(0xFFEEEEEE),
+          );
+        }
+        if (state is! NotificationLoaded) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (state.notifications.isEmpty) {
+          return const Center(child: Text('Belum ada notifikasi.'));
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Recent",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: deactivatedText,
+                    ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Icon(
-                        Icons.pending_actions_rounded,
-                        color: gray,
-                      ).paddingTop(2),
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.only(left: 16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Request - Overtime Approval",
-                                      style: TextStyle(
-                                        color: lightText,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    Text(
-                                      "7 Aug",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black38),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              4.height,
-                              Text(
-                                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
-                              16.height,
-                              Text(
-                                "Approve",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
+                  if (state.unreadCount > 0)
+                    Container(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: infoRed,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        '${state.unreadCount} baru',
+                        style: const TextStyle(
+                          color: white,
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            Flexible(
+              child: RefreshIndicator(
+                onRefresh: () async => context
+                    .read<NotificationBloc>()
+                    .add(LoadNotificationsEvent()),
+                child: ListView.builder(
+                  itemCount: state.notifications.length,
+                  itemBuilder: (context, index) => _NotificationTile(
+                    notification: state.notifications[index],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _NotificationTile extends StatelessWidget {
+  final AppNotification notification;
+
+  const _NotificationTile({required this.notification});
+
+  static IconData _iconFor(NotificationKind kind) => switch (kind) {
+        NotificationKind.attendanceLate => Icons.schedule,
+        NotificationKind.attendanceMissingCheckout => Icons.logout,
+        NotificationKind.leaveApproved => Icons.check_circle_outline,
+        NotificationKind.leaveRejected => Icons.cancel_outlined,
+        NotificationKind.overtimeRequest => Icons.pending_actions_rounded,
+        NotificationKind.overtimeApproved => Icons.verified_outlined,
+        NotificationKind.announcement => Icons.campaign_outlined,
+      };
+
+  @override
+  Widget build(BuildContext context) {
+    final unread = notification.isUnread;
+
+    return InkWell(
+      onTap: unread
+          ? () => context
+              .read<NotificationBloc>()
+              .add(MarkNotificationReadEvent(notification.id))
+          : null,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: unread ? const Color(0xFFEEEEEE) : white,
+          border: Border.all(color: borderColor),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(_iconFor(notification.kind), color: gray).paddingTop(2),
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.only(left: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            notification.title,
+                            style: TextStyle(
+                              color: lightText,
+                              fontWeight:
+                                  unread ? FontWeight.bold : FontWeight.w500,
+                              fontSize: 16,
+                            ),
                           ),
                         ),
-                      )
+                        const SizedBox(width: 8),
+                        Text(
+                          formatDayMonth(notification.createdAt.toLocal()),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black38,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                    4.height,
+                    Text(notification.body),
+                    if (unread) ...[
+                      8.height,
+                      const Text(
+                        'Tandai dibaca',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                          fontSize: 13,
+                        ),
+                      ),
                     ],
-                  ).paddingAll(8),
-                );
-              },
+                  ],
+                ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ).paddingAll(4),
       ),
     );
   }

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:attendance/app_theme.dart';
+import 'package:attendance/presentation/bloc/announcement/announcement_bloc.dart';
 import 'package:attendance/presentation/bloc/attendance/history_bloc.dart';
 import 'package:attendance/presentation/bloc/attendance/summary_bloc.dart';
 import 'package:attendance/presentation/bloc/attendance/today_bloc.dart';
+import 'package:attendance/presentation/bloc/notification/notification_bloc.dart';
+import 'package:attendance/presentation/bloc/office/office_bloc.dart';
 import 'package:attendance/presentation/bloc/onboarding/onboarding_bloc.dart';
-import 'package:attendance/presentation/bloc/promo/promo_bloc.dart';
+import 'package:attendance/presentation/bloc/profile/profile_bloc.dart';
 import 'package:attendance/presentation/bloc/token/token_bloc.dart';
 import 'package:attendance/presentation/pages/splash/splash_page.dart';
 import 'injection_container.dart' as di;
@@ -28,9 +31,6 @@ class MyApp extends StatelessWidget {
           create: (_) => di.sl<TokenBloc>()..add(GetTokenEvent()),
         ),
         BlocProvider(
-          create: (context) => di.sl<PromoBloc>(),
-        ),
-        BlocProvider(
           create: (context) =>
               di.sl<OnboardingBloc>()..add(GetOnBoardingEvent()),
         ),
@@ -39,6 +39,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => di.sl<TodayBloc>()),
         BlocProvider(create: (context) => di.sl<HistoryBloc>()),
         BlocProvider(create: (context) => di.sl<SummaryBloc>()),
+        BlocProvider(create: (context) => di.sl<ProfileBloc>()),
+        BlocProvider(create: (context) => di.sl<NotificationBloc>()),
+        BlocProvider(create: (context) => di.sl<AnnouncementBloc>()),
+        BlocProvider(create: (context) => di.sl<OfficeBloc>()),
       ],
       child: MaterialApp(
         title: 'Attendance',

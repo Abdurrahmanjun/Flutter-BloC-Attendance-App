@@ -20,7 +20,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     on<OnboardingEvent>((event, emit) async {
       if (event is RunSliderEvent) {
         emit(LoadedSliderState(
-          id: event.id > promoImagePaths.length - 1 ? 0 : event.id,
+          id: event.id > onboardingImagePaths.length - 1 ? 0 : event.id,
         ));
       }
 

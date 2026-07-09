@@ -3,11 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart' as nbutils;
 
+import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:attendance/common/utils/colors.dart';
+import 'package:attendance/presentation/bloc/announcement/announcement_bloc.dart';
 import 'package:attendance/presentation/bloc/attendance/summary_bloc.dart';
 import 'package:attendance/presentation/bloc/attendance/today_bloc.dart';
+import 'package:attendance/presentation/bloc/office/office_bloc.dart';
+import 'package:attendance/presentation/bloc/profile/profile_bloc.dart';
+import 'package:attendance/presentation/pages/dashboard_home/components/announcement_carousel.dart';
 import 'package:attendance/presentation/pages/dashboard_home/components/attendance_action_card.dart';
 import 'package:attendance/presentation/pages/dashboard_home/components/hrm_diagram_card.dart';
+import 'package:attendance/presentation/pages/profile/profile_page.dart';
 
 class DashboardHomePageThree extends StatefulWidget {
   const DashboardHomePageThree({super.key});
@@ -24,6 +31,9 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
     context
         .read<SummaryBloc>()
         .add(LoadSummaryEvent(SummaryBloc.currentMonth()));
+    context.read<AnnouncementBloc>().add(LoadAnnouncementsEvent());
+    context.read<ProfileBloc>().add(LoadProfileEvent());
+    context.read<OfficeBloc>().add(CheckProximityEvent());
   }
 
   @override
@@ -35,34 +45,35 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
         flexibleSpace: SafeArea(
           child: Container(
             margin: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Hello Abdurrahmanjun",
-                  style: nbutils.boldTextStyle(size: 18, color: white),
-                ),
-                Text(
-                  "Selamat Pagi, Selamat Beraktivitas !",
-                  style:
-                      nbutils.secondaryTextStyle(color: nearlyWhite, size: 12),
-                )
-              ],
+            child: BlocBuilder<ProfileBloc, ProfileState>(
+              builder: (context, state) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    state is ProfileLoaded
+                        ? "Hello ${state.user.name}"
+                        : "Hello",
+                    style: nbutils.boldTextStyle(size: 18, color: white),
+                  ),
+                  Text(
+                    "Selamat Pagi, Selamat Beraktivitas !",
+                    style:
+                        nbutils.secondaryTextStyle(color: nearlyWhite, size: 12),
+                  )
+                ],
+              ),
             ),
           ),
         ),
         actions: [
-          Container(
-            height: 50.0,
-            width: 50.0,
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage(
-                        "https://images.pexels.com/photos/5110839/pexels-photo-5110839.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"),
-                    fit: BoxFit.cover),
-                borderRadius: BorderRadius.all(Radius.circular(100.0))),
-          ).paddingAll(16),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const ProfilePage()),
+            ),
+            child: const _AvatarAction().paddingAll(16),
+          ),
         ],
       ),
       body: Container(
@@ -78,6 +89,8 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
             child: Column(
               children: <Widget>[
                 const AttendanceActionCard(),
+                const AnnouncementCarousel(),
+                const SizedBox(height: 8),
                 // Others Menu
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -113,6 +126,44 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
               ],
             ),
           ))),
+    );
+  }
+}
+
+/// The user's avatar, from `GET /api/me`. Falls back to an initial: the
+/// contract's example avatarUrl is on cdn.example.com and does not resolve.
+class _AvatarAction extends StatelessWidget {
+  const _AvatarAction();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      builder: (context, state) {
+        final user = state is ProfileLoaded ? state.user : null;
+        final fallback = CircleAvatar(
+          radius: 25,
+          backgroundColor: navyDark,
+          child: Text(
+            user == null || user.name.isEmpty
+                ? '?'
+                : user.name[0].toUpperCase(),
+            style: nbutils.boldTextStyle(size: 18, color: white),
+          ),
+        );
+
+        if (user?.avatarUrl == null) return fallback;
+
+        return ClipOval(
+          child: CachedNetworkImage(
+            imageUrl: user!.avatarUrl!,
+            height: 50,
+            width: 50,
+            fit: BoxFit.cover,
+            placeholder: (_, __) => fallback,
+            errorWidget: (_, __, ___) => fallback,
+          ),
+        );
+      },
     );
   }
 }

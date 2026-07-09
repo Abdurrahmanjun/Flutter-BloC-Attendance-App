@@ -5,25 +5,32 @@ import 'package:attendance/common/utils/model_keys.dart';
 import 'package:attendance/common/location/location_service.dart';
 import 'package:attendance/data/datasources/attendance_remote_data_source.dart';
 import 'package:attendance/data/datasources/onboarding_local_data_source.dart';
+import 'package:attendance/data/datasources/profile_remote_data_source.dart';
 import 'package:attendance/data/datasources/token_local_data_source.dart';
 import 'package:attendance/data/datasources/token_remote_data_source.dart';
 import 'package:attendance/data/repositories/attendance_repository_impl.dart';
 import 'package:attendance/data/repositories/onboarding_repository_impl.dart';
+import 'package:attendance/data/repositories/profile_repository_impl.dart';
 import 'package:attendance/data/repositories/token_repository_impl.dart';
 import 'package:attendance/domain/repositories/attendance_repository.dart';
 import 'package:attendance/domain/repositories/onboarding_repository.dart';
+import 'package:attendance/domain/repositories/profile_repository.dart';
 import 'package:attendance/domain/repositories/token_repository.dart';
 import 'package:attendance/domain/usecases/attendance_use_cases.dart';
 import 'package:attendance/domain/usecases/get_onboarding_use_case.dart';
+import 'package:attendance/domain/usecases/profile_use_cases.dart';
 import 'package:attendance/domain/usecases/get_token_use_case.dart';
 import 'package:attendance/domain/usecases/logout_use_case.dart';
 import 'package:attendance/domain/usecases/set_onboarding_use_case.dart';
 import 'package:attendance/domain/usecases/set_token_use_case.dart';
+import 'package:attendance/presentation/bloc/announcement/announcement_bloc.dart';
 import 'package:attendance/presentation/bloc/attendance/history_bloc.dart';
 import 'package:attendance/presentation/bloc/attendance/summary_bloc.dart';
 import 'package:attendance/presentation/bloc/attendance/today_bloc.dart';
+import 'package:attendance/presentation/bloc/notification/notification_bloc.dart';
+import 'package:attendance/presentation/bloc/office/office_bloc.dart';
 import 'package:attendance/presentation/bloc/onboarding/onboarding_bloc.dart';
-import 'package:attendance/presentation/bloc/promo/promo_bloc.dart';
+import 'package:attendance/presentation/bloc/profile/profile_bloc.dart';
 import 'package:attendance/presentation/bloc/token/token_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,7 +48,6 @@ Future<void> init() async {
         logoutUseCase: sl(),
       ));
 
-  sl.registerFactory(() => PromoBloc());
   sl.registerFactory(() => OnboardingBloc(
         setOnboardingUseCase: sl(),
         getOnboardingUseCase: sl(),
@@ -55,6 +61,17 @@ Future<void> init() async {
   sl.registerFactory(() => HistoryBloc(getAttendanceHistoryUseCase: sl()));
   sl.registerFactory(() => SummaryBloc(getAttendanceSummaryUseCase: sl()));
 
+  sl.registerFactory(() => ProfileBloc(getMeUseCase: sl()));
+  sl.registerFactory(() => NotificationBloc(
+        getNotificationsUseCase: sl(),
+        markNotificationReadUseCase: sl(),
+      ));
+  sl.registerFactory(() => AnnouncementBloc(getAnnouncementsUseCase: sl()));
+  sl.registerFactory(() => OfficeBloc(
+        getOfficesUseCase: sl(),
+        locationService: sl(),
+      ));
+
 // Usecases
   sl.registerLazySingleton(() => SetTokenUseCase(sl()));
   sl.registerLazySingleton(() => GetTokenUseCase(sl()));
@@ -67,6 +84,12 @@ Future<void> init() async {
   sl.registerLazySingleton(() => CheckOutUseCase(sl()));
   sl.registerLazySingleton(() => GetAttendanceHistoryUseCase(sl()));
   sl.registerLazySingleton(() => GetAttendanceSummaryUseCase(sl()));
+
+  sl.registerLazySingleton(() => GetMeUseCase(sl()));
+  sl.registerLazySingleton(() => GetNotificationsUseCase(sl()));
+  sl.registerLazySingleton(() => MarkNotificationReadUseCase(sl()));
+  sl.registerLazySingleton(() => GetAnnouncementsUseCase(sl()));
+  sl.registerLazySingleton(() => GetOfficesUseCase(sl()));
 
 // Repository
   sl.registerLazySingleton<TokenRepository>(
@@ -90,6 +113,10 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerLazySingleton<ProfileRepository>(
+    () => ProfileRepositoryImpl(remoteDataSource: sl()),
+  );
+
 // Datasources
   sl.registerLazySingleton<TokenRemoteDataSource>(
       () => TokenRemoteDataSourceImpl(dio: sl()));
@@ -104,6 +131,9 @@ Future<void> init() async {
 
   sl.registerLazySingleton<AttendanceRemoteDataSource>(
       () => AttendanceRemoteDataSourceImpl(dio: sl()));
+
+  sl.registerLazySingleton<ProfileRemoteDataSource>(
+      () => ProfileRemoteDataSourceImpl(dio: sl()));
 
 // Core
   sl.registerLazySingleton<NetWorkInfo>(() => NetworkInfoImpl(sl()));

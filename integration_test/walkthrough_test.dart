@@ -134,9 +134,27 @@ void main() {
     expect(find.text('Cuti'), findsOneWidget);
     await binding.takeScreenshot('09-history');
 
+    // The notification feed, from GET /api/notifications.
+    await tester.tap(find.byIcon(Icons.notifications));
+    await settle(tester);
+    expect(find.text('Request - Overtime Approval'), findsOneWidget);
+    expect(find.text('2 baru'), findsOneWidget);
+    expect(find.text('Leave approved'), findsOneWidget);
+    await binding.takeScreenshot('10-notifications');
+
     // The debug dev menu that drives Prefer.
     await tester.tap(find.byIcon(Icons.settings));
     await settle(tester);
-    await binding.takeScreenshot('10-dev-menu');
+    await binding.takeScreenshot('11-dev-menu');
+
+    // The profile, from GET /api/me, reached via the home screen's avatar.
+    await tester.tap(find.byIcon(Icons.home));
+    await settle(tester);
+    await tester.tap(find.byType(CircleAvatar).first);
+    await settle(tester);
+    expect(find.text('Budi Santoso'), findsOneWidget);
+    expect(find.text('20240117'), findsOneWidget);
+    expect(find.text('09:00 – 18:00 (Asia/Jakarta)'), findsOneWidget);
+    await binding.takeScreenshot('12-profile');
   });
 }

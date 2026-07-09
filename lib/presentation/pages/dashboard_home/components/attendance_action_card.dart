@@ -5,6 +5,7 @@ import 'package:attendance/common/utils/colors.dart';
 import 'package:attendance/common/utils/format_functions.dart';
 import 'package:attendance/data/models/attendance/today_attendance.dart';
 import 'package:attendance/presentation/bloc/attendance/today_bloc.dart';
+import 'package:attendance/presentation/bloc/office/office_bloc.dart';
 
 /// The home screen's main action, driven entirely by `GET /attendance/today`:
 /// `not_checked_in` offers Check In, `checked_in` offers Check Out, and
@@ -113,12 +114,39 @@ class _PunchPanel extends StatelessWidget {
                 ),
               ],
               const SizedBox(height: 16),
-              _PunchButton(
-                label: checkingIn ? 'CHECK IN' : 'CHECK OUT',
-                busy: punching,
-                onTap: () => context
-                    .read<TodayBloc>()
-                    .add(checkingIn ? CheckInEvent() : CheckOutEvent()),
+              // Greying out the button when we know we are outside the fence is
+              // a local affordance only. The server re-validates and decides;
+              // if we have no fix, OfficeBloc stays silent and the button works.
+              BlocBuilder<OfficeBloc, OfficeState>(
+                builder: (context, officeState) {
+                  final outside = checkingIn &&
+                      officeState is OfficeProximityKnown &&
+                      !officeState.withinGeofence;
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _PunchButton(
+                        label: checkingIn ? 'CHECK IN' : 'CHECK OUT',
+                        busy: punching,
+                        disabled: outside,
+                        onTap: () => context
+                            .read<TodayBloc>()
+                            .add(checkingIn ? CheckInEvent() : CheckOutEvent()),
+                      ),
+                      if (outside) ...[
+                        const SizedBox(height: 8),
+                        Text(
+                          '${officeState.distanceMeters.round()}m dari '
+                          '${officeState.office.name}. Mendekat ke kantor '
+                          'untuk check in.',
+                          style:
+                              const TextStyle(fontSize: 11, color: nearlyWhite),
+                        ),
+                      ],
+                    ],
+                  );
+                },
               ),
             ],
           ),
@@ -133,23 +161,27 @@ class _PunchPanel extends StatelessWidget {
 class _PunchButton extends StatelessWidget {
   final String label;
   final bool busy;
+  final bool disabled;
   final VoidCallback onTap;
 
   const _PunchButton({
     required this.label,
     required this.busy,
     required this.onTap,
+    this.disabled = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final inert = busy || disabled;
+
     return GestureDetector(
-      onTap: busy ? null : onTap,
+      onTap: inert ? null : onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: busy ? koswaraOrange.withOpacity(0.6) : koswaraOrange,
+          color: inert ? koswaraOrange.withOpacity(0.4) : koswaraOrange,
         ),
         child: busy
             ? const SizedBox(
