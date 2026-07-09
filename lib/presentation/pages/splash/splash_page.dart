@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:attendance/presentation/bloc/destination/destination_bloc.dart';
-import 'package:attendance/presentation/bloc/onboarding/onboarding_bloc.dart';
 import 'package:attendance/presentation/bloc/token/token_bloc.dart';
 import 'package:attendance/presentation/pages/auth/login_page.dart';
 import 'package:attendance/presentation/pages/dashboard_navigation/dashboard_navigation_page.dart';
-import 'package:attendance/presentation/pages/onboarding/onboarding_page.dart';
 
+/// A lightweight routing gate. It shows nothing branded — just briefly waits
+/// for the persisted-token check to resolve, then jumps straight to the login
+/// screen or the dashboard. No artificial delay, so there is no visible
+/// "second splash" after the native launch screen.
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
@@ -18,20 +19,25 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   bool _navigated = false;
 
+  @override
+  void initState() {
+    super.initState();
+    // Handle the case where the token check already resolved before this
+    // page mounted (BlocListener only fires on subsequent changes).
+    WidgetsBinding.instance.addPostFrameCallback((_) => _decide());
+  }
+
   void _go(Widget page) {
     if (_navigated) return;
     _navigated = true;
-    Future.delayed(const Duration(seconds: 1), () {
-      if (!mounted) return;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => page),
-      );
-    });
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => page),
+    );
   }
 
-  /// Decides where to go once the token (login flag) and onboarding states
-  /// have both resolved.
+  /// Routes once the token (login flag) check has finished. Onboarding is
+  /// intentionally skipped for now (the page still exists for later use).
   void _decide() {
     if (_navigated) return;
 
@@ -42,8 +48,7 @@ class _SplashPageState extends State<SplashPage> {
       return;
     }
 
-    // A valid persisted token means the user already logged in previously,
-    // so skip the login screen and go straight to the dashboard.
+    // Valid persisted token -> already logged in -> go to the dashboard.
     if (tokenState is LoadedGetTokenState) {
       BlocProvider.of<DestinationBloc>(context)
           .add(GetDestinationEvent(token: tokenState.token));
@@ -51,42 +56,18 @@ class _SplashPageState extends State<SplashPage> {
       return;
     }
 
-    // No token -> not logged in. First-time users see onboarding, returning
-    // (but logged-out) users go straight to login.
-    final onboardingState = context.read<OnboardingBloc>().state;
-    if (onboardingState is LoadedGetOnboardingState) {
-      _go(const LoginPage());
-    } else if (onboardingState is ErrorGetOnboardingState) {
-      _go(const OnBoardingPage());
-    }
+    // No token -> not logged in -> straight to login.
+    _go(const LoginPage());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: MultiBlocListener(
-        listeners: [
-          BlocListener<TokenBloc, TokenState>(
-            listener: (context, state) => _decide(),
-          ),
-          BlocListener<OnboardingBloc, OnboardingState>(
-            listener: (context, state) => _decide(),
-          ),
-        ],
-        child: Container(
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/images/logo.png',
-                width: 200,
-              ),
-              20.height,
-              const Text("Powered by : HRM App")
-            ],
-          ),
+      body: BlocListener<TokenBloc, TokenState>(
+        listener: (context, state) => _decide(),
+        child: const Center(
+          child: CircularProgressIndicator(),
         ),
       ),
     );
