@@ -6,6 +6,7 @@
 //     --dart-define=BASE_URL=http://localhost:4100
 //
 // Screenshots land in build/screenshots/.
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geolocator/geolocator.dart';
@@ -59,6 +60,13 @@ void main() {
 
   testWidgets('login -> today -> check in -> geofence 422 -> history -> summary',
       (tester) async {
+    // Android captures screenshots from a bitmap of the Flutter surface, which
+    // must be converted once before the first takeScreenshot. iOS does not need
+    // it (and does not offer it), so this is Android-only.
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      await binding.convertFlutterSurfaceToImage();
+    }
+
     await tester.pumpWidget(const MyApp());
     await tester.pumpAndSettle();
     await binding.takeScreenshot('01-login');
