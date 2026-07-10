@@ -1,7 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Both punches send lat/lng, and the server rejects a check-in outside the
+         office geofence, so a fix is a hard prerequisite. COARSE is declared
+         alongside FINE because Android 12+ lets the user grant approximate
+         location only. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
    <application
         android:label="Attendance"
         android:name="${applicationName}"

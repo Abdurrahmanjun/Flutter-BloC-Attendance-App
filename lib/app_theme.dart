@@ -18,7 +18,10 @@ class AppTheme {
       error: Colors.red,
       onPrimary: Colors.white,
       onSecondary: Colors.white,
-      onSurface: Colors.white,
+      // `surface` is white, so `onSurface` cannot be. ListTile, and anything
+      // else that takes its foreground from the scheme, rendered white-on-white
+      // and was simply invisible.
+      onSurface: darkerText,
       onBackground: Colors.black,
       onError: Colors.redAccent,
       brightness: Brightness.light,
