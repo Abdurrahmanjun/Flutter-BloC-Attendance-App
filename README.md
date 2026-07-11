@@ -162,3 +162,8 @@ done yet:
 ## 📄 License
 
 MIT License
+
+---
+
+*Built by Abdurrahman Jundullah M — mobile engineer (Flutter + native Android), 8+ years, fintech/banking background.*
+
