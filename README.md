@@ -19,11 +19,11 @@ the Prism mock over the LAN.
 
 | Login | Home — check in | Checked in |
 |:---:|:---:|:---:|
-| ![Login](assets/screenshots/01-login.png) | ![Home](assets/screenshots/02-home.png) | ![Checked in](assets/screenshots/03-checked-in.png) |
+| <img src="assets/screenshots/01-login.png" width="220" alt="Login"> | <img src="assets/screenshots/02-home.png" width="220" alt="Home"> | <img src="assets/screenshots/03-checked-in.png" width="220" alt="Checked in"> |
 | **Day summary** | **Geofence (real GPS)** | **History** |
-| ![Checked out](assets/screenshots/04-checked-out.png) | ![Geofence](assets/screenshots/05-geofence.png) | ![History](assets/screenshots/06-history.png) |
+| <img src="assets/screenshots/04-checked-out.png" width="220" alt="Checked out"> | <img src="assets/screenshots/05-geofence.png" width="220" alt="Geofence"> | <img src="assets/screenshots/06-history.png" width="220" alt="History"> |
 | **Notifications** | **Profile** | **Dev menu** |
-| ![Notifications](assets/screenshots/07-notifications.png) | ![Profile](assets/screenshots/08-profile.png) | ![Dev menu](assets/screenshots/09-dev-menu.png) |
+| <img src="assets/screenshots/07-notifications.png" width="220" alt="Notifications"> | <img src="assets/screenshots/08-profile.png" width="220" alt="Profile"> | <img src="assets/screenshots/09-dev-menu.png" width="220" alt="Dev menu"> |
 
 The geofence shot is real: the device was ~19.8 km from the seeded Jakarta HQ,
 so the check-in button greys out and shows the measured distance. The server
