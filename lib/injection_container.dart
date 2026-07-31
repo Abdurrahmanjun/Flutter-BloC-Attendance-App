@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:attendance/common/settings/app_settings.dart';
 import 'package:attendance/common/utils/constants.dart';
 import 'package:attendance/common/utils/model_keys.dart';
 import 'package:attendance/common/location/location_service.dart';
@@ -163,4 +164,5 @@ Future<void> init() async {
       instanceName: InjectionInstance.base);
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
+  sl.registerLazySingleton(() => AppSettings(sl()));
 }

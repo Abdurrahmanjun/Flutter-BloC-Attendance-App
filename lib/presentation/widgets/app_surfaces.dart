@@ -246,7 +246,13 @@ class ScreenBody extends StatelessWidget {
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: T.maxContentWidth),
-        child: Padding(padding: padding, child: child),
+        child: Padding(
+          padding: padding,
+          // Full width, so a child narrower than the screen — a bare title
+          // Text, say — sits at the left margin instead of being centred by
+          // the Center above.
+          child: SizedBox(width: double.infinity, child: child),
+        ),
       ),
     );
   }

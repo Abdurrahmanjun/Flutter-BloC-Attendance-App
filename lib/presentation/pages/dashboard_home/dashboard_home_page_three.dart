@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:attendance/app_theme.dart';
+import 'package:attendance/common/settings/app_settings.dart';
 import 'package:attendance/common/utils/design_tokens.dart';
+import 'package:attendance/injection_container.dart' as di;
 import 'package:attendance/presentation/bloc/announcement/announcement_bloc.dart';
 import 'package:attendance/presentation/bloc/attendance/history_bloc.dart';
 import 'package:attendance/presentation/bloc/attendance/summary_bloc.dart';
@@ -44,8 +46,11 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
     super.initState();
     _load();
     // Live, not one-shot: the hero's distance meter is meant to fill as the
-    // user walks toward the office.
-    context.read<OfficeBloc>().add(WatchProximityEvent());
+    // user walks toward the office. Skipped entirely when the user has turned
+    // "Lokasi saat check-in" off in Pengaturan.
+    if (di.sl<AppSettings>().locationOnCheckIn.value) {
+      context.read<OfficeBloc>().add(WatchProximityEvent());
+    }
   }
 
   @override
@@ -86,7 +91,9 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
           child: RefreshIndicator(
             onRefresh: () async {
               _load();
-              context.read<OfficeBloc>().add(CheckProximityEvent());
+              if (di.sl<AppSettings>().locationOnCheckIn.value) {
+                context.read<OfficeBloc>().add(CheckProximityEvent());
+              }
             },
             child: ListView(
               physics: const AlwaysScrollableScrollPhysics(),
