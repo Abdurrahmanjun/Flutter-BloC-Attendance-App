@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:attendance/common/error/error_mapper.dart';
 import 'package:attendance/common/error/failures.dart';
 import 'package:attendance/data/datasources/profile_remote_data_source.dart';
+import 'package:attendance/data/models/leave/leave_balance.dart';
 import 'package:attendance/data/models/notification/app_notification.dart';
 import 'package:attendance/data/models/reference/announcement.dart';
 import 'package:attendance/data/models/reference/office.dart';
@@ -36,6 +37,10 @@ class ProfileRepositoryImpl implements ProfileRepository {
   @override
   Future<Either<Failure, List<Office>>> offices() =>
       _guard(remoteDataSource.offices);
+
+  @override
+  Future<Either<Failure, List<LeaveBalance>>> leaveBalance() =>
+      _guard(remoteDataSource.leaveBalance);
 
   Future<Either<Failure, T>> _guard<T>(Future<T> Function() call) async {
     try {

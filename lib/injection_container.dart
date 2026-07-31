@@ -30,6 +30,7 @@ import 'package:attendance/presentation/bloc/attendance/today_bloc.dart';
 import 'package:attendance/presentation/bloc/notification/notification_bloc.dart';
 import 'package:attendance/presentation/bloc/office/office_bloc.dart';
 import 'package:attendance/presentation/bloc/onboarding/onboarding_bloc.dart';
+import 'package:attendance/presentation/bloc/report/report_bloc.dart';
 import 'package:attendance/presentation/bloc/profile/profile_bloc.dart';
 import 'package:attendance/presentation/bloc/token/token_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -60,6 +61,11 @@ Future<void> init() async {
       ));
   sl.registerFactory(() => HistoryBloc(getAttendanceHistoryUseCase: sl()));
   sl.registerFactory(() => SummaryBloc(getAttendanceSummaryUseCase: sl()));
+  sl.registerFactory(() => ReportBloc(
+        getAttendanceSummaryUseCase: sl(),
+        getAttendanceHistoryUseCase: sl(),
+        getLeaveBalanceUseCase: sl(),
+      ));
 
   sl.registerFactory(() => ProfileBloc(getMeUseCase: sl()));
   sl.registerFactory(() => NotificationBloc(
@@ -83,6 +89,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => CheckInUseCase(sl()));
   sl.registerLazySingleton(() => CheckOutUseCase(sl()));
   sl.registerLazySingleton(() => GetAttendanceHistoryUseCase(sl()));
+  sl.registerLazySingleton(() => GetLeaveBalanceUseCase(sl()));
   sl.registerLazySingleton(() => GetAttendanceSummaryUseCase(sl()));
 
   sl.registerLazySingleton(() => GetMeUseCase(sl()));

@@ -25,7 +25,14 @@ class DashboardHomePageThree extends StatefulWidget {
   /// and "Riwayat" go to Absensi. Home does not push routes of its own.
   final void Function(int index)? onNavigate;
 
-  const DashboardHomePageThree({super.key, this.onNavigate});
+  /// Opens Laporan bulanan for the given month, inside the Absensi tab.
+  final void Function(DateTime month)? onOpenReport;
+
+  const DashboardHomePageThree({
+    super.key,
+    this.onNavigate,
+    this.onOpenReport,
+  });
 
   @override
   State<DashboardHomePageThree> createState() => _DashboardHomePageThreeState();
@@ -103,9 +110,8 @@ class _DashboardHomePageThreeState extends State<DashboardHomePageThree> {
                       ),
                       const SizedBox(height: T.blockGap),
                       MonthlySummaryCard(
-                        // TODO(redesign): "Detail" belongs on Laporan bulanan,
-                        // which is not built yet; Absensi is its parent tab.
-                        onDetail: () => widget.onNavigate?.call(1),
+                        onDetail: () =>
+                            widget.onOpenReport?.call(DateTime.now()),
                       ),
                       const SizedBox(height: T.blockGap),
                       const AnnouncementCard(),

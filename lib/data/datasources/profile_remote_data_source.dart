@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import 'package:attendance/common/network/api_response.dart';
+import 'package:attendance/data/models/leave/leave_balance.dart';
 import 'package:attendance/data/models/notification/app_notification.dart';
 import 'package:attendance/data/models/reference/announcement.dart';
 import 'package:attendance/data/models/reference/office.dart';
@@ -14,6 +15,7 @@ abstract class ProfileRemoteDataSource {
   Future<void> markNotificationRead(int id);
   Future<List<Announcement>> announcements();
   Future<List<Office>> offices();
+  Future<List<LeaveBalance>> leaveBalance();
 }
 
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
@@ -51,6 +53,14 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
         '/api/office/locations',
         (data) => (data as List<dynamic>)
             .map((e) => Office.fromJson(e as Map<String, dynamic>))
+            .toList(),
+      );
+
+  @override
+  Future<List<LeaveBalance>> leaveBalance() => _get(
+        '/api/leave/balance',
+        (data) => (data as List<dynamic>)
+            .map((e) => LeaveBalance.fromJson(e as Map<String, dynamic>))
             .toList(),
       );
 

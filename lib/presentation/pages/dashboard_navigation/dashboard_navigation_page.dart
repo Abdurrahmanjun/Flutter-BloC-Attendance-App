@@ -7,6 +7,7 @@ import 'package:attendance/presentation/pages/dashboard_absence/dashboard_absenc
 import 'package:attendance/presentation/pages/dashboard_home/dashboard_home_page_three.dart';
 import 'package:attendance/presentation/pages/dashboard_notification/dashboard_notification_page.dart';
 import 'package:attendance/presentation/pages/dashboard_settings/dashboard_settings_page.dart';
+import 'package:attendance/presentation/pages/monthly_report/monthly_report_page.dart';
 import 'package:attendance/presentation/pages/profile/profile_page.dart';
 import 'package:attendance/presentation/widgets/app_text.dart';
 
@@ -27,6 +28,12 @@ class HomeNavBarPage extends StatefulWidget {
 class _HomeNavBarPageState extends State<HomeNavBarPage> {
   int currentIndex = 0;
 
+  /// When set, the Absensi tab shows the monthly report for this month instead
+  /// of the history list. The handoff keeps the tab bar on that screen with
+  /// Absensi still active, so the report lives inside the tab rather than being
+  /// pushed over the whole shell.
+  DateTime? reportMonth;
+
   static const _items = <_NavItem>[
     _NavItem('Beranda', Icons.home_rounded, Icons.home_outlined),
     _NavItem('Absensi', Icons.event_available_rounded,
@@ -42,12 +49,28 @@ class _HomeNavBarPageState extends State<HomeNavBarPage> {
     setState(() => currentIndex = index);
   }
 
+  /// Home's "Detail" and "Riwayat" both land in the Absensi tab; "Detail" opens
+  /// the report on top of it.
+  void _openReport(DateTime month) {
+    setState(() {
+      currentIndex = 1;
+      reportMonth = month;
+    });
+  }
+
+  void _closeReport() => setState(() => reportMonth = null);
+
   Widget _page(int index) => switch (index) {
-        1 => const DashboardAbsencePage(),
+        1 => reportMonth == null
+            ? const DashboardAbsencePage()
+            : MonthlyReportPage(month: reportMonth!, onBack: _closeReport),
         2 => const DashboardNotificationPage(),
         3 => const ProfilePage(),
         4 => const DashboardSettingsPage(),
-        _ => DashboardHomePageThree(onNavigate: _select),
+        _ => DashboardHomePageThree(
+            onNavigate: _select,
+            onOpenReport: _openReport,
+          ),
       };
 
   @override
