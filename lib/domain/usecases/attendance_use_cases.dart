@@ -32,10 +32,12 @@ class GetAttendanceHistoryUseCase {
   GetAttendanceHistoryUseCase(this.repository);
 
   Future<Either<Failure, AttendanceHistory>> call({
+    String? from,
+    String? to,
     int page = 1,
     int perPage = 20,
   }) =>
-      repository.history(page: page, perPage: perPage);
+      repository.history(from: from, to: to, page: page, perPage: perPage);
 }
 
 class GetAttendanceSummaryUseCase {

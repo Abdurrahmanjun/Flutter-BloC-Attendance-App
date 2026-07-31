@@ -17,7 +17,12 @@ abstract class AttendanceRemoteDataSource {
   Future<TodayAttendance> today();
   Future<ApiResponse<AttendanceEntry>> checkIn(AttendancePunch punch);
   Future<ApiResponse<AttendanceEntry>> checkOut(AttendancePunch punch);
-  Future<AttendanceHistory> history({int page, int perPage});
+  Future<AttendanceHistory> history({
+    String? from,
+    String? to,
+    int page,
+    int perPage,
+  });
   Future<MonthlySummary> summary(String month);
 }
 
@@ -41,10 +46,21 @@ class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
       _post('/api/attendance/check-out', punch.toJson());
 
   @override
-  Future<AttendanceHistory> history({int page = 1, int perPage = 20}) => _get(
+  Future<AttendanceHistory> history({
+    String? from,
+    String? to,
+    int page = 1,
+    int perPage = 20,
+  }) =>
+      _get(
         '/api/attendance/history',
         (data) => AttendanceHistory.fromJson(data as Map<String, dynamic>),
-        query: {'page': page, 'perPage': perPage},
+        query: {
+          if (from != null) 'from': from,
+          if (to != null) 'to': to,
+          'page': page,
+          'perPage': perPage,
+        },
       );
 
   @override

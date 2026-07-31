@@ -100,8 +100,13 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
         distanceMeters: nearestDistance,
         withinGeofence: nearestDistance <= nearest.radiusMeters,
       ));
-    } on LocationException {
+    } catch (_) {
       // No fix. Say nothing and let the server decide.
+      //
+      // Deliberately not `on LocationException`: geolocator's own `timeLimit`
+      // throws a bare TimeoutException, which escaped that clause and surfaced
+      // as an unhandled async error — once per tick, forever, now that this
+      // runs on a poll rather than once per page load.
     }
   }
 

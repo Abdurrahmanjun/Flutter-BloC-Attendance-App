@@ -8,6 +8,7 @@ import 'package:attendance/presentation/bloc/attendance/today_bloc.dart';
 import 'package:attendance/presentation/bloc/office/office_bloc.dart';
 import 'package:attendance/presentation/widgets/app_surfaces.dart';
 import 'package:attendance/presentation/widgets/app_text.dart';
+import 'package:attendance/presentation/widgets/day_tiles.dart';
 
 /// The four states of the day, as the design names them. Derived from
 /// `GET /attendance/today` and the geofence measurement — never held locally.
@@ -327,7 +328,11 @@ class _Content extends StatelessWidget {
           ],
         HeroStatus.done => [
             const SizedBox(height: 18),
-            _DayTiles(today: today),
+            DayTiles(
+              checkInAt: today.checkInAt,
+              checkOutAt: today.checkOutAt,
+              workedMinutes: today.workedMinutes,
+            ),
           ],
         HeroStatus.outside when proximity != null => [
             const SizedBox(height: 18),
@@ -532,67 +537,6 @@ class _ShiftProgress extends StatelessWidget {
             fontWeight: FontWeight.w600,
             color: Colors.white.withOpacity(0.6),
           )),
-        ),
-      );
-}
-
-/// `done` — the day's three numbers.
-class _DayTiles extends StatelessWidget {
-  final TodayAttendance today;
-
-  const _DayTiles({required this.today});
-
-  @override
-  Widget build(BuildContext context) {
-    final checkIn = today.checkInAt;
-    final checkOut = today.checkOutAt;
-
-    return Row(
-      children: [
-        _tile(
-          checkIn == null ? '—' : formatTimeOfDay(checkIn.toLocal()),
-          'Masuk',
-        ),
-        const SizedBox(width: 10),
-        _tile(
-          checkOut == null ? '—' : formatTimeOfDay(checkOut.toLocal()),
-          'Pulang',
-        ),
-        const SizedBox(width: 10),
-        _tile(formatMinutes(today.workedMinutes), 'Total'),
-      ],
-    );
-  }
-
-  Widget _tile(String value, String label) => Expanded(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(T.rInput),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                value,
-                style: AppText.numeric(const TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.white,
-                )),
-              ),
-              const SizedBox(height: 3),
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white.withOpacity(0.62),
-                ),
-              ),
-            ],
-          ),
         ),
       );
 }

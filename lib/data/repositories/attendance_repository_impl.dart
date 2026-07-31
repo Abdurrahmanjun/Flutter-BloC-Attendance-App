@@ -35,10 +35,17 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
 
   @override
   Future<Either<Failure, AttendanceHistory>> history({
+    String? from,
+    String? to,
     int page = 1,
     int perPage = 20,
   }) =>
-      _guard(() => remoteDataSource.history(page: page, perPage: perPage));
+      _guard(() => remoteDataSource.history(
+            from: from,
+            to: to,
+            page: page,
+            perPage: perPage,
+          ));
 
   @override
   Future<Either<Failure, MonthlySummary>> summary(String month) =>

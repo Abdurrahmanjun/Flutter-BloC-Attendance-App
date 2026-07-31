@@ -8,8 +8,14 @@ part 'history_event.dart';
 part 'history_state.dart';
 
 /// `GET /api/attendance/history`, paginated, newest first.
+///
+/// The contract scopes the feed with `from`/`to`, so a month view asks the
+/// server for that month rather than paging backwards until it shows up.
 class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
   final GetAttendanceHistoryUseCase getAttendanceHistoryUseCase;
+
+  /// The month currently scoping the feed, or null while it is unscoped.
+  DateTime? _month;
 
   HistoryBloc({required this.getAttendanceHistoryUseCase})
       : super(HistoryInitial()) {
@@ -17,12 +23,33 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     on<LoadMoreHistoryEvent>(_onLoadMore);
   }
 
+  /// `YYYY-MM-DD` for the first and last day of [month].
+  static (String from, String to) monthRange(DateTime month) {
+    String fmt(DateTime d) => '${d.year.toString().padLeft(4, '0')}-'
+        '${d.month.toString().padLeft(2, '0')}-'
+        '${d.day.toString().padLeft(2, '0')}';
+    // Day 0 of the next month is the last day of this one — leap years and
+    // 30-day months included, without a table.
+    return (
+      fmt(DateTime(month.year, month.month, 1)),
+      fmt(DateTime(month.year, month.month + 1, 0)),
+    );
+  }
+
   Future<void> _onLoad(
     LoadHistoryEvent event,
     Emitter<HistoryState> emit,
   ) async {
+    _month = event.month;
     emit(HistoryLoading());
-    final either = await getAttendanceHistoryUseCase(page: 1);
+
+    final range = _month == null ? null : monthRange(_month!);
+    final either = await getAttendanceHistoryUseCase(
+      from: range?.$1,
+      to: range?.$2,
+      page: 1,
+    );
+
     emit(either.fold(
       (failure) => HistoryFailure(failure.message),
       (page) => HistoryLoaded(
@@ -30,6 +57,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
         page: page.page,
         hasMore: page.hasMore,
         totalEntries: page.totalEntries,
+        month: _month,
       ),
     ));
   }
@@ -44,7 +72,13 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     }
 
     emit(current.copyWith(loadingMore: true));
-    final either = await getAttendanceHistoryUseCase(page: current.page + 1);
+
+    final range = _month == null ? null : monthRange(_month!);
+    final either = await getAttendanceHistoryUseCase(
+      from: range?.$1,
+      to: range?.$2,
+      page: current.page + 1,
+    );
 
     emit(either.fold(
       // Keep the rows already on screen; a failed "load more" should not wipe
@@ -62,6 +96,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
           page: page.page,
           hasMore: page.hasMore,
           totalEntries: page.totalEntries,
+          month: current.month,
         );
       },
     ));

@@ -24,7 +24,14 @@ abstract class AttendanceRepository {
 
   Future<Either<Failure, PunchResult>> checkOut();
 
-  Future<Either<Failure, AttendanceHistory>> history({int page, int perPage});
+  /// [from] and [to] are `YYYY-MM-DD`, inclusive; the contract scopes the
+  /// feed with them so a month view does not have to page to reach itself.
+  Future<Either<Failure, AttendanceHistory>> history({
+    String? from,
+    String? to,
+    int page,
+    int perPage,
+  });
 
   /// [month] is `YYYY-MM`.
   Future<Either<Failure, MonthlySummary>> summary(String month);

@@ -18,12 +18,18 @@ class HistoryLoaded extends HistoryState {
   final int totalEntries;
   final bool loadingMore;
 
+  /// The month these entries were scoped to, or null when the feed is
+  /// unscoped. Readers use it to tell "this month is empty" apart from
+  /// "these entries are some other month's".
+  final DateTime? month;
+
   const HistoryLoaded({
     required this.entries,
     required this.page,
     required this.hasMore,
     required this.totalEntries,
     this.loadingMore = false,
+    this.month,
   });
 
   HistoryLoaded copyWith({bool? loadingMore, bool? hasMore}) => HistoryLoaded(
@@ -32,10 +38,12 @@ class HistoryLoaded extends HistoryState {
         hasMore: hasMore ?? this.hasMore,
         totalEntries: totalEntries,
         loadingMore: loadingMore ?? this.loadingMore,
+        month: month,
       );
 
   @override
-  List<Object?> get props => [entries, page, hasMore, totalEntries, loadingMore];
+  List<Object?> get props =>
+      [entries, page, hasMore, totalEntries, loadingMore, month];
 }
 
 class HistoryFailure extends HistoryState {
