@@ -79,12 +79,12 @@ void main() {
     await settle(tester);
 
     // `not_checked_in` -> the main button offers Check In.
-    expect(find.text('CHECK IN'), findsOneWidget);
-    expect(find.text('Belum check-in hari ini'), findsOneWidget);
+    expect(find.text('Check in sekarang'), findsOneWidget);
+    expect(find.text('Belum absen'), findsOneWidget);
     await binding.takeScreenshot('02-home-not-checked-in');
 
     // A successful punch: Prism returns 201 with the confirmation message.
-    await tester.tap(find.text('CHECK IN'));
+    await tester.tap(find.text('Check in sekarang'));
     await settle(tester);
     expect(find.textContaining('Checked in at'), findsOneWidget);
     await binding.takeScreenshot('03-check-in-accepted');
@@ -92,7 +92,7 @@ void main() {
 
     // The geofence rejection, shown verbatim.
     DevPrefer.punch.value = 'code=422';
-    await tester.tap(find.text('CHECK IN'));
+    await tester.tap(find.text('Check in sekarang'));
     await settle(tester);
     expect(find.textContaining('from Jakarta HQ'), findsOneWidget);
     await binding.takeScreenshot('04-geofence-422');
@@ -100,7 +100,7 @@ void main() {
 
     // Already checked in today: 409, not a duplicate record.
     DevPrefer.punch.value = 'code=409';
-    await tester.tap(find.text('CHECK IN'));
+    await tester.tap(find.text('Check in sekarang'));
     await settle(tester);
     expect(find.textContaining('Already checked in'), findsOneWidget);
     await binding.takeScreenshot('05-duplicate-409');
@@ -109,33 +109,33 @@ void main() {
 
     // `checked_in` -> the same button now offers Check Out.
     DevPrefer.today.value = 'example=afterLateCheckIn';
-    await tester.tap(find.text('COBA LAGI').hitTestable().evaluate().isEmpty
-        ? find.text('CHECK IN')
-        : find.text('COBA LAGI'));
+    await tester.tap(find.text('Coba lagi').hitTestable().evaluate().isEmpty
+        ? find.text('Check in sekarang')
+        : find.text('Coba lagi'));
     await settle(tester);
-    expect(find.text('CHECK OUT'), findsOneWidget);
+    expect(find.text('Check out'), findsOneWidget);
     expect(find.textContaining('terlambat 3 menit'), findsOneWidget);
     await binding.takeScreenshot('06-home-checked-in');
 
     // `checked_out` -> the day summary replaces the button entirely.
     DevPrefer.today.value = 'example=afterCheckOut';
-    await tester.tap(find.text('CHECK OUT'));
+    await tester.tap(find.text('Check out'));
     await settle(tester);
     expect(find.text('Hari ini selesai'), findsOneWidget);
-    expect(find.text('9h 27m'), findsOneWidget);
+    expect(find.text('9j 27m'), findsOneWidget);
     await binding.takeScreenshot('07-home-checked-out');
     await tester.pumpAndSettle(const Duration(seconds: 5));
 
     // The monthly summary card, further down the home screen.
-    await tester.drag(
-        find.byType(SingleChildScrollView).first, const Offset(0, -400));
+    await tester.drag(find.text('Pengajuan'), const Offset(0, -400));
     await tester.pumpAndSettle();
-    expect(find.text('Ringkasan 2026-07'), findsOneWidget);
+    expect(find.text('Juli 2026'), findsOneWidget);
     await binding.takeScreenshot('08-summary-card');
 
-    // History, on the Reports tab. BottomNavyBar only renders the label of the
-    // selected tab, so tap the icon.
-    await tester.tap(find.byIcon(Icons.pending_actions));
+    // History, on the Absensi tab. Every tab renders its label, so tap that —
+    // the icons are no longer unique now that the shell keeps all five pages
+    // alive in an IndexedStack.
+    await tester.tap(find.text('Absensi'));
     await settle(tester);
     expect(find.text('9 Jul 2026'), findsOneWidget);
     expect(find.text('Terlambat'), findsWidgets);
@@ -143,7 +143,7 @@ void main() {
     await binding.takeScreenshot('09-history');
 
     // The notification feed, from GET /api/notifications.
-    await tester.tap(find.byIcon(Icons.notifications));
+    await tester.tap(find.text('Notifikasi'));
     await settle(tester);
     expect(find.text('Request - Overtime Approval'), findsOneWidget);
     expect(find.text('2 baru'), findsOneWidget);
@@ -151,16 +151,16 @@ void main() {
     await binding.takeScreenshot('10-notifications');
 
     // The debug dev menu that drives Prefer.
-    await tester.tap(find.byIcon(Icons.settings));
+    await tester.tap(find.text('Atur'));
     await settle(tester);
     await binding.takeScreenshot('11-dev-menu');
 
-    // The profile, from GET /api/me, reached via the home screen's avatar.
-    await tester.tap(find.byIcon(Icons.home));
+    // The profile, from GET /api/me. It is its own tab in the redesign rather
+    // than a route pushed from the home screen's avatar.
+    await tester.tap(find.text('Profil'));
     await settle(tester);
-    await tester.tap(find.byType(CircleAvatar).first);
-    await settle(tester);
-    expect(find.text('Budi Santoso'), findsOneWidget);
+    // The home greeting renders the name too, and the shell keeps home alive.
+    expect(find.text('Budi Santoso'), findsWidgets);
     expect(find.text('20240117'), findsOneWidget);
     expect(find.text('09:00 – 18:00 (Asia/Jakarta)'), findsOneWidget);
     await binding.takeScreenshot('12-profile');

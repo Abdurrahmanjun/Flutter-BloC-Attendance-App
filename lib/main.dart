@@ -48,6 +48,10 @@ class MyApp extends StatelessWidget {
         title: 'Attendance',
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
+        // The redesign is light-only — "Mode gelap" is a Pengaturan switch that
+        // ships off, and no dark tokens were handed off. Without this the app
+        // silently followed the OS into a dark theme the design never covered.
+        themeMode: ThemeMode.light,
         home: const SplashPage(),
       ),
     );

@@ -78,12 +78,12 @@ void main() {
     // Monas, ~2.9km north of the Jl. Sudirman office (radius 100m).
     await boot(tester, const _FixedLocationService(lat: -6.1754, lng: 106.8272));
 
-    expect(find.text('CHECK IN'), findsOneWidget);
+    expect(find.text('Check in'), findsOneWidget);
     expect(find.textContaining('dari Jakarta HQ'), findsOneWidget);
-    expect(find.textContaining('Mendekat ke kantor'), findsOneWidget);
+    expect(find.textContaining('Mendekat, atau ajukan izin'), findsOneWidget);
 
     // Tapping does nothing: no punch is attempted, so no snackbar appears.
-    await tester.tap(find.text('CHECK IN'));
+    await tester.tap(find.text('Check in'));
     for (var i = 0; i < 20; i++) {
       await tester.pump(const Duration(milliseconds: 100));
     }
@@ -97,10 +97,10 @@ void main() {
     await boot(
         tester, const _FixedLocationService(lat: -6.208763, lng: 106.845599));
 
-    expect(find.text('CHECK IN'), findsOneWidget);
-    expect(find.textContaining('Mendekat ke kantor'), findsNothing);
+    expect(find.text('Check in sekarang'), findsOneWidget);
+    expect(find.textContaining('Mendekat, atau ajukan izin'), findsNothing);
 
-    await tester.tap(find.text('CHECK IN'));
+    await tester.tap(find.text('Check in sekarang'));
     for (var i = 0; i < 30; i++) {
       await tester.pump(const Duration(milliseconds: 100));
     }
@@ -110,7 +110,7 @@ void main() {
   testWidgets('no fix: button stays enabled, server decides', (tester) async {
     await boot(tester, const _FixedLocationService(fails: true));
 
-    expect(find.text('CHECK IN'), findsOneWidget);
-    expect(find.textContaining('Mendekat ke kantor'), findsNothing);
+    expect(find.text('Check in sekarang'), findsOneWidget);
+    expect(find.textContaining('Mendekat, atau ajukan izin'), findsNothing);
   });
 }
