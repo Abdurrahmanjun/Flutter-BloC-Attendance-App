@@ -30,6 +30,7 @@ import 'package:attendance/presentation/bloc/attendance/today_bloc.dart';
 import 'package:attendance/presentation/bloc/notification/notification_bloc.dart';
 import 'package:attendance/presentation/bloc/office/office_bloc.dart';
 import 'package:attendance/presentation/bloc/onboarding/onboarding_bloc.dart';
+import 'package:attendance/presentation/bloc/profile_detail/profile_detail_bloc.dart';
 import 'package:attendance/presentation/bloc/report/report_bloc.dart';
 import 'package:attendance/presentation/bloc/profile/profile_bloc.dart';
 import 'package:attendance/presentation/bloc/token/token_bloc.dart';
@@ -68,6 +69,12 @@ Future<void> init() async {
       ));
 
   sl.registerFactory(() => ProfileBloc(getMeUseCase: sl()));
+  sl.registerFactory(() => ProfileDetailBloc(
+        getMeUseCase: sl(),
+        getLeaveBalanceUseCase: sl(),
+        getOfficesUseCase: sl(),
+        getAttendanceSummaryUseCase: sl(),
+      ));
   sl.registerFactory(() => NotificationBloc(
         getNotificationsUseCase: sl(),
         markNotificationReadUseCase: sl(),
