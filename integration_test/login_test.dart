@@ -32,7 +32,7 @@ void main() {
 
     await tester.enterText(find.byType(TextField).at(0), 'budi@example.com');
     await tester.enterText(find.byType(TextField).at(1), 'correct-horse-battery');
-    await tester.tap(find.text('LOGIN'));
+    await tester.tap(find.text('Masuk'));
 
     // Let the real HTTP round-trip to Prism complete.
     for (var i = 0; i < 40; i++) {

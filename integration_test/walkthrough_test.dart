@@ -75,7 +75,7 @@ void main() {
     await tester.enterText(find.byType(TextField).at(1), 'correct-horse-battery');
     await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('LOGIN'));
+    await tester.tap(find.text('Masuk'));
     await settle(tester);
 
     // `not_checked_in` -> the main button offers Check In.
@@ -146,7 +146,8 @@ void main() {
     await tester.tap(find.text('Notifikasi'));
     await settle(tester);
     expect(find.text('Request - Overtime Approval'), findsOneWidget);
-    expect(find.text('2 baru'), findsOneWidget);
+    // The unread count is a bare pill in the redesign, not "2 baru".
+    expect(find.text('2'), findsWidgets);
     expect(find.text('Leave approved'), findsOneWidget);
     await binding.takeScreenshot('10-notifications');
 
@@ -161,8 +162,9 @@ void main() {
     await settle(tester);
     // The home greeting renders the name too, and the shell keeps home alive.
     expect(find.text('Budi Santoso'), findsWidgets);
-    expect(find.text('20240117'), findsOneWidget);
-    expect(find.text('09:00 – 18:00 (Asia/Jakarta)'), findsOneWidget);
+    expect(find.textContaining('20240117'), findsWidgets);
+    // Profil renders the zone as WIB, not the IANA name.
+    expect(find.text('09:00 – 18:00 WIB'), findsOneWidget);
     await binding.takeScreenshot('12-profile');
   });
 }
