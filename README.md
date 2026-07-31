@@ -17,17 +17,18 @@ the contract.
 Captured on a physical device (Samsung Galaxy A55, Android 16) running against
 the Prism mock over the LAN.
 
-| Login | Home — check in | Checked in |
+| Login | Home — outside the geofence | Home — working |
 |:---:|:---:|:---:|
-| <img src="assets/screenshots/01-login.png" width="220" alt="Login"> | <img src="assets/screenshots/02-home.png" width="220" alt="Home"> | <img src="assets/screenshots/03-checked-in.png" width="220" alt="Checked in"> |
-| **Day summary** | **Geofence (real GPS)** | **History** |
-| <img src="assets/screenshots/04-checked-out.png" width="220" alt="Checked out"> | <img src="assets/screenshots/05-geofence.png" width="220" alt="Geofence"> | <img src="assets/screenshots/06-history.png" width="220" alt="History"> |
-| **Notifications** | **Profile** | **Dev menu** |
-| <img src="assets/screenshots/07-notifications.png" width="220" alt="Notifications"> | <img src="assets/screenshots/08-profile.png" width="220" alt="Profile"> | <img src="assets/screenshots/09-dev-menu.png" width="220" alt="Dev menu"> |
+| <img src="assets/screenshots/01-login.png" width="220" alt="Login"> | <img src="assets/screenshots/02-home-geofence.png" width="220" alt="Home, outside the geofence"> | <img src="assets/screenshots/03-home-working.png" width="220" alt="Home, checked in"> |
+| **Home — day closed** | **Absensi** | **Laporan bulanan** |
+| <img src="assets/screenshots/04-home-done.png" width="220" alt="Home, checked out"> | <img src="assets/screenshots/05-absensi.png" width="220" alt="Absensi"> | <img src="assets/screenshots/06-laporan.png" width="220" alt="Laporan bulanan"> |
+| **Notifikasi** | **Profil** | **Pengaturan** |
+| <img src="assets/screenshots/07-notifikasi.png" width="220" alt="Notifikasi"> | <img src="assets/screenshots/08-profil.png" width="220" alt="Profil"> | <img src="assets/screenshots/09-pengaturan.png" width="220" alt="Pengaturan"> |
 
-The geofence shot is real: the device was ~19.8 km from the seeded Jakarta HQ,
-so the check-in button greys out and shows the measured distance. The server
-re-validates every punch — the local check is only a UX affordance.
+The geofence shot is real: the device was 19,9 km from the seeded Jakarta HQ, so
+the check-in button greys out, the distance meter sits at empty, and the card
+offers "Ajukan izin" instead. The server re-validates every punch — the local
+check is only a UX affordance.
 
 ---
 
