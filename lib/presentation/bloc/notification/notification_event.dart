@@ -17,3 +17,7 @@ class MarkNotificationReadEvent extends NotificationEvent {
   @override
   List<Object> get props => [id];
 }
+
+/// "Tandai semua". The contract has no bulk endpoint, so this fans out over
+/// `POST /notifications/{id}/read` — one call per unread item.
+class MarkAllNotificationsReadEvent extends NotificationEvent {}

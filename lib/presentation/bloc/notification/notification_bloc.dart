@@ -18,6 +18,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
   }) : super(NotificationInitial()) {
     on<LoadNotificationsEvent>(_onLoad);
     on<MarkNotificationReadEvent>(_onMarkRead);
+    on<MarkAllNotificationsReadEvent>(_onMarkAllRead);
   }
 
   Future<void> _onLoad(
@@ -46,5 +47,23 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
     // Re-read rather than mutate locally: the server owns readAt and
     // unreadCount. On failure leave the list exactly as it was.
     if (either.isRight()) add(LoadNotificationsEvent());
+  }
+
+  /// "Tandai semua". No bulk endpoint exists, so this is a fan-out over the
+  /// per-item one. The calls go out together, and the feed is re-read once at
+  /// the end rather than after each — a partial failure just leaves those items
+  /// unread, which the reload will show accurately.
+  Future<void> _onMarkAllRead(
+    MarkAllNotificationsReadEvent event,
+    Emitter<NotificationState> emit,
+  ) async {
+    final current = state;
+    if (current is! NotificationLoaded) return;
+
+    final unread = current.notifications.where((n) => n.isUnread).toList();
+    if (unread.isEmpty) return;
+
+    await Future.wait(unread.map((n) => markNotificationReadUseCase(n.id)));
+    add(LoadNotificationsEvent());
   }
 }
